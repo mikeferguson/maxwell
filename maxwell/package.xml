@@ -1,0 +1,19 @@
+<package>
+  <name>maxwell</name>
+  <version>0.2.0</version>
+  <description>
+    Maxwell is a custom mobile manipulator. The Maxwell stack contains configuration, launch, and demo applications for the Maxwell robot.
+  </description>
+  <author>Michael Ferguson</author>
+  <maintainer email="mike@vanadiumlabs.com">Michael Ferguson</maintainer>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/maxwell</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>maxwell_defs</run_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>
