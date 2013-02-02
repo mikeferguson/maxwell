@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<robot>
+  
+  <!-- standoffs -->
+  <macro name="standoffs" params="name parent length *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="${length/2} 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${length} 0.037 0.030"/>
+        </geometry>
+        <material name="Grey"/>
+      </visual>
+      <collision>
+        <origin xyz="${length/2} 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${length} 0.037 0.030"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <!-- cosmetics -->
+  <macro name="arm_mount" params="name parent *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 -0.034" rpy="1.57 3.14 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/arm_mount.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.03055 ${-0.0047625/2} 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0865 0.0047625 0.038"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <!-- the actual arm -->
+  <macro name="maxwell_arm" params="name parent *origin">
+
+    <!-- Arm Link -->
+    <joint name="${name}_base_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+    <link name="${name}_link"/>
+    <arm_mount name="${name}_left_mount" parent="${name}_link">
+      <origin xyz="-0.0611 0.0254 0" rpy="0 0 0"/>
+    </arm_mount>
+    <arm_mount name="${name}_right_mount" parent="${name}_link">
+      <origin xyz="-0.0611 ${-0.0254} 0" rpy="3.14 0 0"/>
+    </arm_mount>
+
+    <!-- Shoulder pan -->
+    <dynamixel_rx64_pan parent="${name}_link" name="${name}_shoulder_pan_servo" color="Black">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </dynamixel_rx64_pan>
+    <rx64_side_revolute parent="${name}_shoulder_pan_servo_link" name="${name}_shoulder_pan" llimit="-1.57" ulimit="1.57" vlimit="0.524" color="Grey">
+      <origin xyz="0 0 0.0235" rpy="0 0 0"/>
+    </rx64_side_revolute>
+
+    <!-- Shoulder lift -->
+    <dynamixel_rx64_tilt parent="${name}_shoulder_pan_link" name="${name}_shoulder_lift_servo" color="Black">
+      <origin xyz="0 0 ${0.0611-0.013+0.0045}" rpy="0 -1.57 0"/>
+    </dynamixel_rx64_tilt>
+    <joint name="${name}_shoulder_lift_joint" type="revolute">
+      <origin xyz="0 0 0" rpy="0 1.57 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="30" velocity="0.524" lower="-1.77" upper="1.317" />
+      <parent link="${name}_shoulder_lift_servo_link"/>
+      <child link="${name}_shoulder_lift_link" />
+    </joint>
+    <link name="${name}_shoulder_lift_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="-1.57 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/arm_mx64_upper.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.08 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.204 0.053 0.044"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Elbow -->
+    <joint name="${name}_elbow_flex_joint" type="revolute">
+      <origin xyz="0.16 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit effort="30" velocity="0.524" lower="-1.57" upper="2.617" />
+      <parent link="${name}_shoulder_lift_link"/>
+      <child link="${name}_elbow_flex_link" />
+    </joint>
+    <link name="${name}_elbow_flex_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="1.57 -1.57 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="${(0.0611-0.026)/2} 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0611 0.0470 0.0420"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Forearm -->
+    <joint name="${name}_forearm_fixed_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${name}_elbow_flex_link"/>
+      <child link="${name}_forearm_link" />
+    </joint>
+    <link name="${name}_forearm_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="-1.57 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/arm_mx64_forearm.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0625 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.03 0.053 0.044"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Wrist flex -->
+    <dynamixel_rx64_tilt parent="${name}_forearm_link" name="${name}_wrist_flex_servo" color="Black">
+      <origin xyz="0.125 0 0" rpy="0 0 0"/>
+    </dynamixel_rx64_tilt>
+    <rx64_hinge parent="${name}_wrist_flex_servo_link" name="${name}_wrist_flex" llimit="-1.57" ulimit="1.57" vlimit="0.785" color="Grey">
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+    </rx64_hinge>
+
+    <!-- Wrist roll -->
+    <joint name="${name}_wrist_roll_joint" type="revolute">
+      <axis xyz="1 0 0" />
+      <limit effort="30" velocity="0.785" lower="-2.617" upper="2.617"/>
+      <origin xyz="0.031 0 0" rpy="0 0 0" />
+      <parent link="${name}_wrist_flex_link"/>
+      <child link="${name}_wrist_roll_link"/>
+    </joint>
+    <link name="${name}_wrist_roll_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="${0.0381/2} 0 0" rpy="0 0 1.57" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="${0.040/2} 0.0 ${-(0.0506-0.024)/2} " rpy="0 0 0" />
+        <geometry>
+          <box size="0.040 0.032 0.0501"/>
+        </geometry>
+      </collision>
+    </link>
+
+  </macro>
+
+</robot>

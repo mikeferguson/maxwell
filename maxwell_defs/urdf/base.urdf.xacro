@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot>
+
+  <include filename="$(find maxwell_defs)/urdf/sensors/hokuyo_urg_laser.urdf.xacro" />
+
+  <property name="ground_clearance" value="0.0238" />
+  <!-- simplified box collision geometry for base -->
+  <property name="wheels_offset_x" value="0.12065" />
+  <property name="wheel_offset_y" value="0.19304" />
+  <property name="wheel_length" value="0.02032" />
+  <property name="wheel_radius" value="0.06191" />
+  <property name="base_size_x" value="0.4064" />
+  <property name="base_size_y" value="0.4064" />
+  <property name="base_size_z" value="0.1310" />
+
+  <!-- location of hokuyo laser -->
+  <property name="base_laser_x" value="0.0318" />
+  <property name="base_laser_z" value="0.1885" />
+
+  <!-- define a wheel -->
+  <macro name="armadillo_wheel" params="suffix parent reflect color">
+    <joint name="${parent}_${suffix}_wheel_joint" type="continuous">
+      <axis xyz="0 0 1" />
+      <limit effort="100" velocity="100"/>
+      <safety_controller k_velocity="10" />
+      <origin xyz="0 ${reflect*wheel_offset_y} ${wheel_radius}" rpy="${reflect*1.57} 0 0" />
+      <parent link="${parent}_link"/>
+      <child link="${parent}_${suffix}_wheel_link"/>
+    </joint>
+    <link name="${parent}_${suffix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+        </geometry>
+        <material name="${color}" />
+      </visual>
+    </link>
+  </macro>
+
+  <!-- The xacro macro armadillo_base contains: base and wheels -->
+  <macro name="armadillo_base" params="name color">
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 ${ground_clearance}" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/base.stl"  />
+        </geometry>
+        <material name="Black" />
+      </visual>
+      <collision>
+        <origin xyz="-${wheels_offset_x} 0 ${base_size_z/2}" rpy="0 0 0" />
+        <geometry>
+          <box size="${base_size_x} ${base_size_y} ${base_size_z}" />
+        </geometry>
+      </collision>
+    </link>
+    <!-- base laser -->
+    <hokuyo_urg_laser name="${name}_laser" parent="${name}" >
+      <origin xyz="${base_laser_x} 0 ${base_laser_z}" rpy="0 0 0" />
+    </hokuyo_urg_laser>    
+    <!-- drive wheels -->
+    <armadillo_wheel parent="${name}" suffix="l" reflect="1" color="${color}"/>
+    <armadillo_wheel parent="${name}" suffix="r" reflect="-1" color="${color}"/>
+  </macro>
+
+</robot>

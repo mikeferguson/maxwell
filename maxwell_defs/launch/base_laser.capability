@@ -1,0 +1,8 @@
+robots: [MX-100]
+capabilities_offered:
+ - type: 1
+   msg_pkg: sensor_msgs
+   msg_type: LaserScan
+   resource: /base_scan
+   keywords: [ base, laser ]
+capabilities_required: []

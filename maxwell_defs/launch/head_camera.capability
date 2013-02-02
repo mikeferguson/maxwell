@@ -1,0 +1,23 @@
+robots: [MX-100]
+capabilities_offered:
+ - type: 1
+   msg_pkg: sensor_msgs
+   msg_type: Image
+   resource: /camera/rgb/image_color
+   keywords: [ head, camera, color ]
+ - type: 1
+   msg_pkg: sensor_msgs
+   msg_type: Image
+   resource: /camera/rgb/image_mono
+   keywords: [ head, camera, mono ]
+ - type: 1
+   msg_pkg: sensor_msgs
+   msg_type: Image
+   resource: /camera/depth/image
+   keywords: [ head, camera, depth ]
+ - type: 1
+   msg_pkg: sensor_msgs
+   msg_type: PointCloud2
+   resource: /camera/rgb/points
+   keywords: [ head, cloud, color ]
+capabilities_required: []

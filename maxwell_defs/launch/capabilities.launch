@@ -1,0 +1,8 @@
+<launch>
+
+  <param name="robot/name" value="Maxwell"/>
+  <param name="robot/type" value="MX-100"/>
+
+  <node name="capabilities_server" pkg="capabilities_server" type="server" output="screen"/>
+
+</launch>

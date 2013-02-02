@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<robot>
+
+  <macro name="kinect_camera" params="name parent *origin">
+    <joint name="${name}_frame_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_frame"/>
+    </joint>
+    <link name="${name}_frame">
+      <visual>
+        <origin xyz="-0.03 0 0.02" rpy="0 0 -1.57" />
+        <!--origin xyz="-0.03 -0.07 0" rpy="0 0 -1.57"-->
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/kinect.stl" />
+        </geometry>
+        <material name="Black" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.064 0.28 0.04"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- kinect ir sensor physical attachment -->
+    <joint name="${name}_ir_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${name}_frame"/>
+      <child link="${name}_ir_link"/>
+    </joint>
+    <link name="${name}_ir_link">
+      <visual>
+        <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- kinect ir sensor frame -->
+    <joint name="${name}_ir_optical_frame_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+      <parent link="${name}_ir_link"/>
+      <child link="${name}_ir_optical_frame"/>
+    </joint>
+    <link name="${name}_ir_optical_frame"/>
+
+    <!-- kinect rgb sensor physical attachment -->
+    <joint name="${name}_rgb_joint" type="fixed">
+      <origin xyz="0 -0.03 0" rpy="0 0 0"/>
+      <parent link="${name}_ir_link"/>
+      <child link="${name}_rgb_link"/>
+    </joint>
+    <link name="${name}_rgb_link">
+      <visual>
+        <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- kinect rgb sensor frame -->
+    <joint name="${name}_rgb_optical_frame_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+      <parent link="${name}_rgb_link"/>
+      <child link="${name}_rgb_optical_frame"/>
+    </joint>
+    <link name="${name}_rgb_optical_frame"/>
+
+  </macro>
+
+</robot>
+

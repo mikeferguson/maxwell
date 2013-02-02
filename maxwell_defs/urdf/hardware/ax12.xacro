@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<robot>
+
+  <property name="AX12_WIDTH" value="0.038"/>
+  <property name="AX12_HEIGHT" value="0.0385"/>
+
+  <macro name="dynamixel_ax12_pan" params="parent name color *origin" >
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="1.57 0 1.57" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="${-0.0501/2+0.0116} 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0501 0.032 0.040"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="dynamixel_ax12_tilt" params="parent name color *origin" >
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 ${-0.0501/2+0.0116}" rpy="0 0 0" />
+        <geometry>
+          <box size="0.032 0.040 0.0501"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_side_revolute" params="name parent llimit ulimit vlimit color *origin" >
+    <joint name="${name}_joint" type="revolute">
+      <insert_block name="origin" />
+      <axis xyz="0 0 1"/>
+      <limit effort="30" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="3.14 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0045" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.038 0.009"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_side_fixed" params="parent name color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 -0.0045" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.038 0.009"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_hinge_revolute" params="parent name color llimit ulimit vlimit *origin">
+    <joint name="${name}_joint" type="revolute">
+      <insert_block name="origin" />
+       <axis xyz="0 1 0"/>
+      <limit effort="30" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F2.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.00775" rpy="0 0 0" />
+        <geometry>
+          <box size="0.025 0.0485 0.0375"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_F1_revolute" params="name parent color llimit ulimit vlimit *origin">
+    <joint name="${name}_joint" type="revolute">
+      <insert_block name="origin" />
+       <axis xyz="0 0 1"/>
+      <limit effort="30" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="3.14 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F1.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.01 0.008 0.0" rpy="0 0 .8" />
+        <geometry>
+          <box size="0.04 0.028 0.046"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_F6_fixed" params="name parent color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="3.14 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F6.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0.001 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.04 0.005 0.024"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_F9_fixed" params="name parent color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F9.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.008 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.008 0.03 0.024"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <macro name="ax12_F11_fixed" params="name parent color *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/F11.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="-0.008 0.025 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.009 0.06 0.028"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+</robot>

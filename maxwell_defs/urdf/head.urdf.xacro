@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- cosmetics -->
+  <macro name="head_mount" params="name parent *origin">
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link" />
+    </joint>
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="-1.57 3.14 0" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/head_mount.stl" scale="1 1 1"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 1.57 0" />
+        <geometry>
+          <box size="0.0865 0.0047625 0.038"/>
+        </geometry>
+      </collision>
+    </link>
+  </macro>
+
+  <!-- origin is center of head tilt rotation -->
+  <macro name="maxwell_head" params="name parent color *origin">
+
+    <joint name="${name}_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+    <link name="${name}_link"/>
+    <head_mount name="${name}_left_mount" parent="${name}_link">
+      <origin xyz="0 0.01905 0" rpy="0 0 0"/>
+    </head_mount>
+    <head_mount name="${name}_right_mount" parent="${name}_link">
+      <origin xyz="0 ${-0.01905-0.003175} 0" rpy="0 0 0"/>
+    </head_mount>
+
+    <!-- Head pan -->
+    <dynamixel_ax12_pan parent="${name}_link" name="${name}_pan_servo" color="Black">
+      <origin xyz="0.010 0 0.0254" rpy="0 0 0"/>
+    </dynamixel_ax12_pan>
+    <ax12_side_revolute parent="${name}_pan_servo_link" name="${name}_pan" llimit="-2.617" ulimit="2.617" vlimit="1.0" color="${color}">
+      <origin xyz="0 0 ${AX12_WIDTH/2}" rpy="0 0 0"/>
+    </ax12_side_revolute>
+
+    <ax12_side_fixed parent="${name}_pan_servo_link" name="${name}_tilt_left_side" color="Black">
+      <origin xyz="-0.015 ${-AX12_WIDTH/2} 0" rpy="1.57 0 0"/>
+    </ax12_side_fixed>
+    <ax12_side_fixed parent="${name}_pan_servo_link" name="${name}_tilt_right_side" color="Black">
+      <origin xyz="-0.015 ${AX12_WIDTH/2} 0" rpy="-1.57 0 0"/>
+    </ax12_side_fixed>
+
+    <!-- Head tilt -->
+    <dynamixel_ax12_tilt parent="${name}_pan_link" name="${name}_tilt_servo" color="Black">
+      <origin xyz="0 0 ${AX12_HEIGHT+0.003}" rpy="0 0 0"/>
+    </dynamixel_ax12_tilt>
+    <ax12_hinge_revolute parent="${name}_tilt_servo_link" name="${name}_tilt" llimit="-1.57" ulimit="1.57" vlimit="1.0" color="${color}">
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+    </ax12_hinge_revolute>
+
+  </macro>
+
+</robot>

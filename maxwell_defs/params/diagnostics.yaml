@@ -1,0 +1,18 @@
+pub_rate: 1.0 # Optional
+base_path: '' # Optional, prepended to all diagnostic output
+analyzers:
+  power:
+    type: GenericAnalyzer
+    path: 'Power System'
+    timeout: 5.0
+    startswith: ['Battery', 'Charging Sources', 'Laptop Battery']
+  joints:
+    type: GenericAnalyzer
+    path: 'Joints'
+    timeout: 5.0
+    contains: '_joint'
+  controllers:
+    type: GenericAnalyzer
+    path: 'Controllers'
+    timeout: 5.0
+    contains: '_controller'

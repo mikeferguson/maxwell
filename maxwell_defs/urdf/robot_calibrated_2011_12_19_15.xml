@@ -1,0 +1,1109 @@
+<?xml version="1.0" ?>
+<robot name="maxwell">
+  <material name="Black">
+    <color rgba="0.2 0.2 0.2 1"/>
+  </material>
+  <material name="Orange">
+    <color rgba="1 0.55 0 1"/>
+  </material>
+  <material name="Grey">
+    <color rgba="0.7 0.7 0.7 1"/>
+  </material>
+  <material name="Red">
+    <color rgba="0.8 0 0 1"/>
+  </material>
+  <material name="White">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="Blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.0238"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/base.stl"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.12065 0 0.0655"/>
+      <geometry>
+        <box size="0.4064 0.4064 0.131"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_laser_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_laser_link"/>
+    <origin rpy="0 0 0" xyz="0.0318 0 0.1885"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+  <link name="base_laser_link" type="laser">
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.022"/>
+      <geometry>
+        <box size="0.05 0.05 0.071"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_l_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="base_l_wheel_link"/>
+    <origin rpy="1.57 0 0" xyz="0 0.19304 0.06191"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="100"/>
+    <safety_controller k_velocity="10"/>
+  </joint>
+  <link name="base_l_wheel_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02032" radius="0.06191"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+  </link>
+  <joint name="base_r_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="base_r_wheel_link"/>
+    <origin rpy="-1.57 0 0" xyz="0 -0.19304 0.06191"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="100"/>
+    <safety_controller k_velocity="10"/>
+  </joint>
+  <link name="base_r_wheel_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.02032" radius="0.06191"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+  </link>
+  <joint name="torso_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="torso_link"/>
+    <origin rpy="0 0 0" xyz="-0.00635 0 0.8041"/>
+  </joint>
+  <link name="torso_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 -0.0930625"/>
+      <geometry>
+        <box size="0.0254 0.0254 1.160075"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.0930625"/>
+      <geometry>
+        <box size="0.0254 0.0254 1.160075"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="torso_actuator_joint" type="fixed">
+    <parent link="torso_link"/>
+    <child link="torso_actuator_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="torso_actuator_link">
+    <visual>
+      <origin rpy="0 0 3.14" xyz="-0.05 -0.0127 -0.56"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/FA-35-TR.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.03 0 -0.245"/>
+      <geometry>
+        <box size="0.03 0.0254 0.65"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_lift_joint" type="prismatic">
+    <parent link="torso_link"/>
+    <child link="arm_lift_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-0.464" upper="0" velocity="0.0508"/>
+  </joint>
+  <link name="arm_lift_link"/>
+  <joint name="arm_base_joint" type="fixed">
+    <parent link="arm_lift_link"/>
+    <child link="arm_link"/>
+    <origin rpy="0 0 0" xyz="0.0611 0 0"/>
+  </joint>
+  <link name="arm_link"/>
+  <joint name="arm_left_mount_joint" type="fixed">
+    <parent link="arm_link"/>
+    <child link="arm_left_mount_link"/>
+    <origin rpy="0 0 0" xyz="-0.0611 0.0254 0"/>
+  </joint>
+  <link name="arm_left_mount_link">
+    <visual>
+      <origin rpy="1.57 3.14 0" xyz="0 0 -0.034"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/arm_mount.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.03055 -0.00238125 0"/>
+      <geometry>
+        <box size="0.0865 0.0047625 0.038"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_right_mount_joint" type="fixed">
+    <parent link="arm_link"/>
+    <child link="arm_right_mount_link"/>
+    <origin rpy="3.14 0 0" xyz="-0.0611 -0.0254 0"/>
+  </joint>
+  <link name="arm_right_mount_link">
+    <visual>
+      <origin rpy="1.57 3.14 0" xyz="0 0 -0.034"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/arm_mount.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.03055 -0.00238125 0"/>
+      <geometry>
+        <box size="0.0865 0.0047625 0.038"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_shoulder_pan_servo_joint" type="fixed">
+    <parent link="arm_link"/>
+    <child link="arm_shoulder_pan_servo_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  <link name="arm_shoulder_pan_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01755 0 0"/>
+      <geometry>
+        <box size="0.0611 0.042 0.047"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_shoulder_pan_joint" type="revolute">
+    <parent link="arm_shoulder_pan_servo_link"/>
+    <child link="arm_shoulder_pan_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0235"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-1.57" upper="1.57" velocity="0.524"/>
+  </joint>
+  <link name="arm_shoulder_pan_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64-side-bracket.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.005"/>
+      <geometry>
+        <box size="0.037 0.037 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_shoulder_lift_servo_joint" type="fixed">
+    <parent link="arm_shoulder_pan_link"/>
+    <child link="arm_shoulder_lift_servo_link"/>
+    <origin rpy="0 -1.57 0" xyz="0 0 0.0526"/>
+  </joint>
+  <link name="arm_shoulder_lift_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01755 0 0"/>
+      <geometry>
+        <box size="0.0611 0.047 0.042"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_shoulder_lift_joint" type="revolute">
+    <parent link="arm_shoulder_lift_servo_link"/>
+    <child link="arm_shoulder_lift_link"/>
+    <origin rpy="0 1.57 0" xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="30" lower="-1.77" upper="1.317" velocity="0.524"/>
+  </joint>
+  <link name="arm_shoulder_lift_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="-1.57 0 1.57" xyz="0.0715 -0.0235 0.015"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64-hxl.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.03575 0 0"/>
+      <geometry>
+        <box size="0.0715 0.056 0.031"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_shoulder_standoff_joint" type="fixed">
+    <parent link="arm_shoulder_lift_link"/>
+    <child link="arm_shoulder_standoff_link"/>
+    <origin rpy="0 0 0" xyz="0.0715 0 0"/>
+  </joint>
+  <link name="arm_shoulder_standoff_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.01905 0 0"/>
+      <geometry>
+        <box size="0.0381 0.037 0.03"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.01905 0 0"/>
+      <geometry>
+        <box size="0.0381 0.037 0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_elbow_flex_fixed_joint" type="fixed">
+    <parent link="arm_shoulder_standoff_link"/>
+    <child link="arm_elbow_flex_fixed_link"/>
+    <origin rpy="0 0 0" xyz="0.0381 0 0"/>
+  </joint>
+  <link name="arm_elbow_flex_fixed_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64-side-bracket.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.005 0 0"/>
+      <geometry>
+        <box size="0.01 0.037 0.037"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_elbow_flex_servo_joint" type="revolute">
+    <parent link="arm_elbow_flex_fixed_link"/>
+    <child link="arm_elbow_flex_servo_link"/>
+    <origin rpy="0 0 0" xyz="0.0526 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="30" lower="-3.14" upper="3.14" velocity="0.524"/>
+  </joint>
+  <link name="arm_elbow_flex_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01755 0 0"/>
+      <geometry>
+        <box size="0.0611 0.047 0.042"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_elbow_flex_joint" type="revolute">
+    <parent link="arm_elbow_flex_servo_link"/>
+    <child link="arm_elbow_flex_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="30" lower="-1.57" upper="2.617" velocity="0.524"/>
+  </joint>
+  <link name="arm_elbow_flex_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="-1.57 0 1.57" xyz="0.0715 -0.0235 0.015"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64-hxl.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.03575 0 0"/>
+      <geometry>
+        <box size="0.0715 0.056 0.031"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_wrist_flex_fixed_joint" type="fixed">
+    <parent link="arm_elbow_flex_link"/>
+    <child link="arm_wrist_flex_fixed_link"/>
+    <origin rpy="0 0 0" xyz="0.0715 0 0"/>
+  </joint>
+  <link name="arm_wrist_flex_fixed_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64-side-bracket.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.005 0 0"/>
+      <geometry>
+        <box size="0.01 0.037 0.037"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_wrist_flex_servo_joint" type="fixed">
+    <parent link="arm_wrist_flex_fixed_link"/>
+    <child link="arm_wrist_flex_servo_link"/>
+    <origin rpy="0 0 0" xyz="0.0526 0 0"/>
+  </joint>
+  <link name="arm_wrist_flex_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01755 0 0"/>
+      <geometry>
+        <box size="0.0611 0.047 0.042"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_wrist_flex_joint" type="revolute">
+    <parent link="arm_wrist_flex_servo_link"/>
+    <child link="arm_wrist_flex_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="30" lower="-1.57" upper="1.57" velocity="0.785"/>
+  </joint>
+  <link name="arm_wrist_flex_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64-hinge-bracket.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.015 0 0"/>
+      <geometry>
+        <box size="0.03 0.056 0.031"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_wrist_roll_joint" type="revolute">
+    <parent link="arm_wrist_flex_link"/>
+    <child link="arm_wrist_roll_link"/>
+    <origin rpy="0.037389996461 -0 0" xyz="0.031 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="30" lower="-2.617" upper="2.617" velocity="0.785"/>
+  </joint>
+  <link name="arm_wrist_roll_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 1.57" xyz="0.01905 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.02 0 -0.0133"/>
+      <geometry>
+        <box size="0.04 0.032 0.0501"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_F6_1_joint" type="fixed">
+    <parent link="arm_wrist_roll_link"/>
+    <child link="gripper_F6_1_link"/>
+    <origin rpy="0 0 0" xyz="0.01905 0.017 -0.014"/>
+  </joint>
+  <link name="gripper_F6_1_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F6.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.001 0 0"/>
+      <geometry>
+        <box size="0.04 0.005 0.024"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_F6_2_joint" type="fixed">
+    <parent link="gripper_F6_1_link"/>
+    <child link="gripper_F6_2_link"/>
+    <origin rpy="3.14 3.14 0" xyz="0.008 0.004 0"/>
+  </joint>
+  <link name="gripper_F6_2_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F6.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.001 0 0"/>
+      <geometry>
+        <box size="0.04 0.005 0.024"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_F6_3_joint" type="fixed">
+    <parent link="arm_wrist_roll_link"/>
+    <child link="gripper_F6_3_link"/>
+    <origin rpy="3.14 0 0" xyz="0.01905 -0.017 -0.014"/>
+  </joint>
+  <link name="gripper_F6_3_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F6.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.001 0 0"/>
+      <geometry>
+        <box size="0.04 0.005 0.024"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_F6_4_joint" type="fixed">
+    <parent link="gripper_F6_3_link"/>
+    <child link="gripper_F6_4_link"/>
+    <origin rpy="0 0 3.14" xyz="0.008 0.004 0"/>
+  </joint>
+  <link name="gripper_F6_4_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F6.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.001 0 0"/>
+      <geometry>
+        <box size="0.04 0.005 0.024"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_gripper_mount_joint" type="fixed">
+    <parent link="gripper_F6_2_link"/>
+    <child link="left_gripper_mount_link"/>
+    <origin rpy="1.57 0 1.57" xyz="-0.018 0.005 0"/>
+  </joint>
+  <link name="left_gripper_mount_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.0045"/>
+      <geometry>
+        <box size="0.025 0.038 0.009"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_gripper_mount_joint" type="fixed">
+    <parent link="gripper_F6_4_link"/>
+    <child link="right_gripper_mount_link"/>
+    <origin rpy="1.57 0 1.57" xyz="-0.018 0.005 0"/>
+  </joint>
+  <link name="right_gripper_mount_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.0045"/>
+      <geometry>
+        <box size="0.025 0.038 0.009"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_gripper_servo_joint" type="fixed">
+    <parent link="left_gripper_mount_link"/>
+    <child link="left_gripper_servo_link"/>
+    <origin rpy="-1.57 1.57 0" xyz="0 0 -0.042"/>
+  </joint>
+  <link name="left_gripper_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01345 0 0"/>
+      <geometry>
+        <box size="0.0501 0.032 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_gripper_servo_joint" type="fixed">
+    <parent link="right_gripper_mount_link"/>
+    <child link="right_gripper_servo_link"/>
+    <origin rpy="1.57 1.57 0" xyz="0 0 -0.042"/>
+  </joint>
+  <link name="right_gripper_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01345 0 0"/>
+      <geometry>
+        <box size="0.0501 0.032 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="l_gripper_joint" type="revolute">
+    <parent link="left_gripper_servo_link"/>
+    <child link="l_gripper_link"/>
+    <origin rpy="3.14 0 1.57" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-1.57" upper="1.57" velocity="0.5"/>
+  </joint>
+  <link name="l_gripper_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F1.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0.8" xyz="0.01 0.008 0"/>
+      <geometry>
+        <box size="0.04 0.028 0.046"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="r_gripper_joint" type="revolute">
+    <parent link="right_gripper_servo_link"/>
+    <child link="r_gripper_link"/>
+    <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-1.57" upper="1.57" velocity="0.5"/>
+  </joint>
+  <link name="r_gripper_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F1.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0.8" xyz="0.01 0.008 0"/>
+      <geometry>
+        <box size="0.04 0.028 0.046"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_gripper_F9_joint" type="fixed">
+    <parent link="l_gripper_link"/>
+    <child link="left_gripper_F9_link"/>
+    <origin rpy="0 3.14 0" xyz="0.0155 0.038 0"/>
+  </joint>
+  <link name="left_gripper_F9_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F9.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.008 0 0"/>
+      <geometry>
+        <box size="0.008 0.03 0.024"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_gripper_F9_joint" type="fixed">
+    <parent link="r_gripper_link"/>
+    <child link="right_gripper_F9_link"/>
+    <origin rpy="0 3.14 0" xyz="0.0155 0.038 0"/>
+  </joint>
+  <link name="right_gripper_F9_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F9.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.008 0 0"/>
+      <geometry>
+        <box size="0.008 0.03 0.024"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_gripper_finger_joint" type="fixed">
+    <parent link="left_gripper_F9_link"/>
+    <child link="left_gripper_finger_link"/>
+    <origin rpy="0 0 0" xyz="0 -0.013 0"/>
+  </joint>
+  <link name="left_gripper_finger_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F11.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.008 0.025 0"/>
+      <geometry>
+        <box size="0.009 0.06 0.028"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_gripper_finger_joint" type="fixed">
+    <parent link="right_gripper_F9_link"/>
+    <child link="right_gripper_finger_link"/>
+    <origin rpy="0 0 0" xyz="0 -0.013 0"/>
+  </joint>
+  <link name="right_gripper_finger_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F11.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Grey"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.008 0.025 0"/>
+      <geometry>
+        <box size="0.009 0.06 0.028"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_joint" type="fixed">
+    <parent link="arm_wrist_roll_link"/>
+    <child link="gripper_link"/>
+    <origin rpy="0 0 0" xyz="0.15 0 -0.015"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  <link name="gripper_link"/>
+  <joint name="head_joint" type="fixed">
+    <parent link="torso_link"/>
+    <child link="head_link"/>
+    <origin rpy="0 0 0" xyz="0.009289998978 0 0.465167868718"/>
+  </joint>
+  <link name="head_link"/>
+  <joint name="head_left_mount_joint" type="fixed">
+    <parent link="head_link"/>
+    <child link="head_left_mount_link"/>
+    <origin rpy="0 0 0" xyz="0 0.01905 0"/>
+  </joint>
+  <link name="head_left_mount_link">
+    <visual>
+      <origin rpy="-1.57 3.14 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/head_mount.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.0865 0.0047625 0.038"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_right_mount_joint" type="fixed">
+    <parent link="head_link"/>
+    <child link="head_right_mount_link"/>
+    <origin rpy="0 0 0" xyz="0 -0.022225 0"/>
+  </joint>
+  <link name="head_right_mount_link">
+    <visual>
+      <origin rpy="-1.57 3.14 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/head_mount.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 1.57 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.0865 0.0047625 0.038"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_pan_servo_joint" type="fixed">
+    <parent link="head_link"/>
+    <child link="head_pan_servo_link"/>
+    <origin rpy="0 0 0" xyz="0.01 0 0.0254"/>
+  </joint>
+  <link name="head_pan_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01345 0 0"/>
+      <geometry>
+        <box size="0.0501 0.032 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_pan_joint" type="revolute">
+    <parent link="head_pan_servo_link"/>
+    <child link="head_pan_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.019"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="30" lower="-2.617" upper="2.617" velocity="1"/>
+  </joint>
+  <link name="head_pan_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.0045"/>
+      <geometry>
+        <box size="0.025 0.038 0.009"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_tilt_left_side_joint" type="fixed">
+    <parent link="head_pan_servo_link"/>
+    <child link="head_tilt_left_side_link"/>
+    <origin rpy="1.57 0 0" xyz="-0.015 -0.019 0"/>
+  </joint>
+  <link name="head_tilt_left_side_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.0045"/>
+      <geometry>
+        <box size="0.025 0.038 0.009"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_tilt_right_side_joint" type="fixed">
+    <parent link="head_pan_servo_link"/>
+    <child link="head_tilt_right_side_link"/>
+    <origin rpy="-1.57 0 0" xyz="-0.015 0.019 0"/>
+  </joint>
+  <link name="head_tilt_right_side_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.0045"/>
+      <geometry>
+        <box size="0.025 0.038 0.009"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_tilt_servo_joint" type="fixed">
+    <parent link="head_pan_link"/>
+    <child link="head_tilt_servo_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0.0415"/>
+  </joint>
+  <link name="head_tilt_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 -0.01345"/>
+      <geometry>
+        <box size="0.032 0.04 0.0501"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_tilt_joint" type="revolute">
+    <parent link="head_tilt_servo_link"/>
+    <child link="head_tilt_link"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="30" lower="-1.57" upper="1.57" velocity="1"/>
+  </joint>
+  <link name="head_tilt_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/F2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Orange"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.00775"/>
+      <geometry>
+        <box size="0.025 0.0485 0.0375"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_camera_frame_joint" type="fixed">
+    <parent link="head_tilt_link"/>
+    <child link="head_camera_frame"/>
+    <origin rpy="0 0 0" xyz="0 0 0.026"/>
+  </joint>
+  <link name="head_camera_frame">
+    <visual>
+      <origin rpy="0 0 -1.57" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/xtion.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.032075"/>
+      <geometry>
+        <box size="0.0381 0.1793875 0.0254"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="head_camera_ir_joint" type="fixed">
+    <parent link="head_camera_frame"/>
+    <child link="head_camera_ir_link"/>
+    <origin rpy="0 0 0" xyz="0.01905 -0.0269875 0.032075"/>
+  </joint>
+  <link name="head_camera_ir_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0005"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="head_camera_ir_optical_frame_joint" type="fixed">
+    <parent link="head_camera_ir_link"/>
+    <child link="head_camera_ir_optical_frame"/>
+    <origin rpy="-1.57 0 -1.57" xyz="0 0 0"/>
+  </joint>
+  <link name="head_camera_ir_optical_frame"/>
+  <joint name="head_camera_rgb_joint" type="fixed">
+    <parent link="head_camera_ir_link"/>
+    <child link="head_camera_rgb_link"/>
+    <origin rpy="0.039104239514 -0.023577132941 -0.022745065677" xyz="-0.03340089998 0.093964120563 0"/>
+  </joint>
+  <link name="head_camera_rgb_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0005"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name="head_camera_rgb_optical_frame_joint" type="fixed">
+    <parent link="head_camera_rgb_link"/>
+    <child link="head_camera_rgb_optical_frame"/>
+    <origin rpy="-1.57 0 -1.57" xyz="0 0 0"/>
+  </joint>
+  <link name="head_camera_rgb_optical_frame"/>
+</robot>

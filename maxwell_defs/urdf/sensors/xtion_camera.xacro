@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<robot>
+
+  <macro name="xtion_camera" params="name parent *origin">
+    <joint name="${name}_frame_joint" type="fixed">
+      <insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="${name}_frame"/>
+    </joint>
+    <link name="${name}_frame">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 -1.57" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/xtion.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="Black" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.032075" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0381 0.1793875 0.0254"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- ir sensor physical attachment -->
+    <joint name="${name}_ir_joint" type="fixed">
+      <origin xyz="0.01905 -0.0269875 0.032075" rpy="0 0 0"/>
+      <parent link="${name}_frame"/>
+      <child link="${name}_ir_link"/>
+    </joint>
+    <link name="${name}_ir_link">
+      <visual>
+        <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- ir sensor frame -->
+    <joint name="${name}_ir_optical_frame_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+      <parent link="${name}_ir_link"/>
+      <child link="${name}_ir_optical_frame"/>
+    </joint>
+    <link name="${name}_ir_optical_frame"/>
+
+    <!-- rgb sensor physical attachment -->
+    <joint name="${name}_rgb_joint" type="fixed">
+      <origin xyz="0 0.0552875 0" rpy="0 -0.08 0"/>
+      <parent link="${name}_ir_link"/>
+      <child link="${name}_rgb_link"/>
+    </joint>
+    <link name="${name}_rgb_link">
+      <visual>
+        <origin xyz="0.0 0.0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="0.0005"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- rgb sensor frame -->
+    <joint name="${name}_rgb_optical_frame_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="-1.57 0.0 -1.57" />
+      <parent link="${name}_rgb_link"/>
+      <child link="${name}_rgb_optical_frame"/>
+    </joint>
+    <link name="${name}_rgb_optical_frame"/>
+
+  </macro>
+
+</robot>

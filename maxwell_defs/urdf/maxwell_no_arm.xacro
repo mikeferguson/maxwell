@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot name="maxwell_no_arm" >
+
+  <!--<property name="column_height" value="1.160075" />--> <!-- deck to top of 80/20: 46-1/8" -->
+  <property name="column_height" value="0.95" />
+
+  <include filename="$(find maxwell_defs)/urdf/hardware/ax12.xacro" />
+  <include filename="$(find maxwell_defs)/urdf/sensors/kinect_camera.urdf.xacro" />
+  
+  <!-- The following included files set up definitions of parts of the robot body -->
+  <include filename="$(find maxwell_defs)/urdf/base.urdf.xacro" />
+  <include filename="$(find maxwell_defs)/urdf/torso.urdf.xacro" />
+  <include filename="$(find maxwell_defs)/urdf/head.urdf.xacro" />
+  <include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
+
+  <!-- Now we can start using the macros included above to define the actual Maxwell -->
+  <armadillo_base name="base" color="Orange"/>
+
+  <!-- Add Torso Upright -->
+  <joint name="torso_joint" type="fixed">
+    <origin xyz="-0.00635 0 ${base_size_z}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="torso_link"/>
+  </joint>
+  <link name="torso_link">
+    <visual>
+      <origin xyz="0 0 ${column_height/2}" rpy="0 0 0 " />
+      <geometry>
+        <box size="0.0254 0.0254 ${column_height}"/>
+      </geometry>
+      <material name="Grey" />
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${column_height/2}" rpy="0 0 0 " />
+      <geometry>
+        <box size="0.0254 0.0254 ${column_height}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Head -->
+  <maxwell_head name="head" parent="torso_link" color="Orange">
+    <origin xyz="0 0 ${column_height}" rpy="0 0 0"/>
+  </maxwell_head>
+  <kinect_camera name="head_camera" parent="head_tilt_link">
+    <origin xyz="0 0 0.026" rpy="0 0 0"/>
+  </kinect_camera>
+
+</robot>

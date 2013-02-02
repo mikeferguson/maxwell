@@ -1,0 +1,10 @@
+robots: [MX-100]
+capabilities_offered:
+ - type: 1
+   msg_pkg: sensor_msgs
+   msg_type: LaserScan
+   resource: /head_scan
+   keywords: [ head, laser ]
+capabilities_required:
+ - type: 1
+   resource: /camera/rgb/points

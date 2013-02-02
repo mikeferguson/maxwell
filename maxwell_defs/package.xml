@@ -1,0 +1,24 @@
+<package>
+  <name>maxwell_defs</name>
+  <version>0.2.0</version>
+  <description>
+    Maxwell is a custom mobile manipulator, this package contains his configuration and launch files. 
+  </description>
+  <author>Michael Ferguson</author>
+  <maintainer email="mike@vanadiumlabs.com">Michael Ferguson</maintainer>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/maxwell_defs</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- definitions -->
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>ivcon</run_depend>
+
+  <!-- diagnostics -->
+  <run_depend>diagnostic_msgs</run_depend>
+
+  <!-- hardware -->
+  <run_depend>arbotix_python</run_depend>
+</package>
