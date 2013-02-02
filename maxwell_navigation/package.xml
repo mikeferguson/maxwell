@@ -1,0 +1,20 @@
+<package>
+  <name>maxwell_navigation</name>
+  <version>0.2.0</version>
+  <description>
+    Navigation configuration for Maxwell.
+  </description>
+  <author>Michael Ferguson</author>
+  <maintainer email="mike@vanadiumlabs.com">Michael Ferguson</maintainer>
+  <license>BSD</license>
+  <url>http://ros.org/wiki/maxwell_navigation</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>hokuyo_node</run_depend> <!-- currently needs to be pulled from hydro-devel branch -->
+  <!-- <run_depend>move_base</run_depend> not yet catkinized -->
+  <run_depend>tf</run_depend>
+  <run_depend>pocketsphinx</run_depend>
+</package>
+
+

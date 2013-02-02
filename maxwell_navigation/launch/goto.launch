@@ -1,0 +1,10 @@
+<launch>
+
+  <node name="recognizer" pkg="pocketsphinx" type="recognizer.py">
+    <param name="lm" value="$(find maxwell_navigation)/params/goto.lm"/>
+    <param name="dict" value="$(find maxwell_navigation)/params/goto.dic"/>
+  </node>
+
+  <node name="maxwell_goto" pkg="maxwell_navigation" type="goto.py" output="screen"/>
+
+</launch>

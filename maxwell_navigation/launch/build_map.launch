@@ -1,0 +1,14 @@
+<launch>
+  <arg name="scan_topic" default="base_scan"/>
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <remap from="scan" to="$(arg scan_topic)" />
+    <param name="linearUpdate" value="0.25"/>
+    <param name="angularUpdate" value="0.25"/>
+    <param name="particles" value="50"/>
+    <param name="xmin" value="-25.0"/>
+    <param name="ymin" value="-25.0"/>
+    <param name="xmax" value="25.0"/>
+    <param name="ymax" value="25.0"/>
+    <param name="delta" value="0.025"/>
+  </node>
+</launch>
