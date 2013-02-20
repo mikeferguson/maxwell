@@ -291,22 +291,74 @@
     <visual>
       <origin rpy="-1.57 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://maxwell_defs/meshes/arm_mx64_upper.stl" scale="1 1 1"/>
+        <mesh filename="package://maxwell_defs/meshes/sixdof_bracket2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="Black"/>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0.08 0.0 0.0"/>
+      <origin rpy="0 0 0" xyz="0.0381 0.0 0.0"/>
       <geometry>
-        <box size="0.204 0.053 0.044"/>
+        <box size="0.0762 0.053 0.044"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_upperarm_roll_servo_joint" type="fixed">
+    <origin rpy="1.57 1.57 0" xyz="0.0839978 0 0"/>
+    <parent link="arm_shoulder_lift_link"/>
+    <child link="arm_upperarm_roll_servo_link"/>
+  </joint>
+  <link name="arm_upperarm_roll_servo_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 1.57 0" xyz=" 0 0 0 "/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="-0.01755 0 0"/>
+      <geometry>
+        <box size="0.0611 0.0470 0.0420"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="arm_upperarm_roll_joint" type="revolute">
+    <origin rpy="-1.57 0 1.57" xyz="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="30" lower="-3.14" upper="3.14" velocity="0.524"/>
+    <parent link="arm_upperarm_roll_servo_link"/>
+    <child link="arm_upperarm_roll_link"/>
+  </joint>
+  <link name="arm_upperarm_roll_link">
+    <inertial>
+      <mass value="0.00001"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+    <visual>
+      <origin rpy="1.57 0 3.14" xyz="0.074295 0 0"/>
+      <geometry>
+        <mesh filename="package://maxwell_defs/meshes/sixdof_bracket1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0381 0.0 0.0"/>
+      <geometry>
+        <box size="0.0762 0.053 0.044"/>
       </geometry>
     </collision>
   </link>
   <joint name="arm_elbow_flex_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.16 0 0"/>
+    <origin rpy="0 0 0" xyz="0.074295 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="30" lower="-1.57" upper="2.617" velocity="0.524"/>
-    <parent link="arm_shoulder_lift_link"/>
+    <parent link="arm_upperarm_roll_link"/>
     <child link="arm_elbow_flex_link"/>
   </joint>
   <link name="arm_elbow_flex_link">
