@@ -1,0 +1,19 @@
+<launch>
+
+  <param name="robot_description" command="cat $(find maxwell_defs)/urdf/maxwell.urdf" />
+
+  <node pkg="tf" type="static_transform_publisher" name="odom_broadcaster" args="0 0 0 0 0 0 odom base_link 100" />
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="true"/>
+  </node>
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />
+
+  <include file="$(find maxwell_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="false"/>
+  </include>
+
+  <include file="$(find maxwell_moveit_config)/launch/moveit_rviz.launch"/>
+
+</launch>
