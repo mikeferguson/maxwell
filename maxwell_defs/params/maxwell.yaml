@@ -5,6 +5,7 @@ joints: {
   head_tilt_joint: {type: dynamixel, id: 2, invert: true, min_angle: -90, max_angle: 90},
   arm_shoulder_pan_joint: {type: dynamixel, id: 3, ticks: 4096, range: 360, max_speed: 30},
   arm_shoulder_lift_joint: {type: dynamixel, id: 4, invert: 1, ticks: 4096, range: 360, max_speed: 30},
+  arm_upperarm_roll_joint: {type: dynamixel, id: 10, invert: 1, ticks: 4096, range: 360, max_speed: 30},
   arm_elbow_flex_joint: {type: dynamixel, id: 5, ticks: 4096, range: 360, max_speed: 30},
   arm_wrist_flex_joint: {type: dynamixel, id: 6, invert: 1, ticks: 4096, range: 360, max_speed: 45},
   arm_wrist_roll_joint: {type: dynamixel, id: 7, max_speed: 45},

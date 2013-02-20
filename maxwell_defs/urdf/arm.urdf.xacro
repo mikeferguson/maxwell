@@ -97,24 +97,58 @@
       <visual>
         <origin xyz="0 0 0" rpy="-1.57 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/arm_mx64_upper.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell_defs/meshes/sixdof_bracket2.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="Black"/>
       </visual>
       <collision>
-        <origin xyz="0.08 0.0 0.0" rpy="0 0 0" />
+        <origin xyz="0.0381 0.0 0.0" rpy="0 0 0" />
         <geometry>
-          <box size="0.204 0.053 0.044"/>
+          <box size="0.0762 0.053 0.044"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Upper Arm Roll -->
+    <dynamixel_rx64_tilt parent="${name}_shoulder_lift_link" name="${name}_upperarm_roll_servo" color="Black">
+      <origin xyz="0.0839978 0 0" rpy="1.57 1.57 0"/>
+    </dynamixel_rx64_tilt>
+    <joint name="${name}_upperarm_roll_joint" type="revolute">
+      <origin xyz="0 0 0" rpy="-1.57 0 1.57"/>
+      <axis xyz="1 0 0"/>
+      <limit effort="30" velocity="0.524" lower="-3.14" upper="3.14" />
+      <parent link="${name}_upperarm_roll_servo_link"/>
+      <child link="${name}_upperarm_roll_link" />
+    </joint>
+    <link name="${name}_upperarm_roll_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+      <visual>
+        <origin xyz="0.074295 0 0" rpy="1.57 0 3.14" />
+        <geometry>
+          <mesh filename="package://maxwell_defs/meshes/sixdof_bracket1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="Black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0381 0.0 0.0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.0762 0.053 0.044"/>
         </geometry>
       </collision>
     </link>
 
     <!-- Elbow -->
     <joint name="${name}_elbow_flex_joint" type="revolute">
-      <origin xyz="0.16 0 0" rpy="0 0 0"/>
+      <origin xyz="0.074295 0 0" rpy="0 0 0"/>
       <axis xyz="0 1 0"/>
       <limit effort="30" velocity="0.524" lower="-1.57" upper="2.617" />
-      <parent link="${name}_shoulder_lift_link"/>
+      <parent link="${name}_upperarm_roll_link"/>
       <child link="${name}_elbow_flex_link" />
     </joint>
     <link name="${name}_elbow_flex_link">
