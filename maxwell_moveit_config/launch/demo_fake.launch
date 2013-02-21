@@ -1,0 +1,11 @@
+<launch>
+
+  <include file="$(find maxwell_defs)/launch/fake_maxwell.launch" />
+
+  <include file="$(find maxwell_moveit_config)/launch/move_group.launch">
+    <arg name="allow_trajectory_execution" value="true"/>
+  </include>
+
+  <include file="$(find maxwell_moveit_config)/launch/moveit_rviz.launch"/>
+
+</launch>
