@@ -284,28 +284,7 @@ public:
           {
             try
             {
-              ControllerInformation ci;
               std::string name = std::string(controller_list[i]["name"]);
-              /*if (controller_list[i].hasMember("default"))
-              {
-                try
-                {
-                  if (controller_list[i]["default"].getType() == XmlRpc::XmlRpcValue::TypeBoolean)
-                  {
-                    ci.default_ = controller_list[i]["default"];
-                  }
-                  else
-                  {
-                    std::string def = std::string(controller_list[i]["default"]);
-                    std::transform(def.begin(), def.end(), def.begin(), ::tolower);
-                    if (def == "true" || def == "yes")
-                      ci.default_ = true;
-                  }
-                }
-                catch (...)
-                {
-                }
-              }*/
               std::string ns;
               if (controller_list[i].hasMember("ns"))
                 ns = std::string(controller_list[i]["ns"]);
@@ -395,6 +374,7 @@ public:
   
   virtual moveit_controller_manager::MoveItControllerManager::ControllerState getControllerState(const std::string &name)
   {
+    /* Controllers need to be loaded and active to be used. */
     moveit_controller_manager::MoveItControllerManager::ControllerState state;
     state.loaded_ = true;
     state.active_ = true;
@@ -404,16 +384,19 @@ public:
   
   virtual bool loadController(const std::string &name)
   {
+    /* All of our controllers are already loaded. */
     return true;
   }
   
   virtual bool unloadController(const std::string &name)
-  { 
+  {
+    /* Cannot unload our controllers */
     return false;
   }
   
   virtual bool switchControllers(const std::vector<std::string> &activate, const std::vector<std::string> &deactivate)
   {
+    /* Cannot switch our controllers */
     return false;
   }
   
@@ -421,20 +404,8 @@ protected:
   
   ros::NodeHandle node_handle_;
   ros::NodeHandle root_node_handle_;
-  ros::Time last_lister_response_;
   std::map<std::string, std::vector<std::string> > controller_joints_;
   std::map<std::string, moveit_controller_manager::MoveItControllerHandlePtr> controller_handles_;
-
-  struct ControllerInformation
-  {
-    ControllerInformation() : default_(false)
-    {
-    }
-    
-    bool default_;
-    std::string ns_;
-    std::vector<std::string> joints_;
-  };
 };
 
 }
