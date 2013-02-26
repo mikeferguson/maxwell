@@ -37,3 +37,13 @@ Gripper:
     - KPIECEkConfigDefault
     - BKPIECEkConfigDefault
     - RRTStarkConfigDefault
+Base:
+  planner_configs:
+    - SBLkConfigDefault
+    - LBKPIECEkConfigDefault
+    - RRTkConfigDefault
+    - RRTConnectkConfigDefault
+    - ESTkConfigDefault
+    - KPIECEkConfigDefault
+    - BKPIECEkConfigDefault
+    - RRTStarkConfigDefault
