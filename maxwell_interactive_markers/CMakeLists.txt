@@ -6,10 +6,10 @@ find_package(catkin REQUIRED roscpp visualization_msgs interactive_markers arbot
 catkin_package()
 
 include_directories(SYSTEM ${catkin_INCLUDE_DIRS})
-add_executable(arm_marker_server src/arm_marker_server.cpp)
-target_link_libraries(arm_marker_server ${Boost_LIBRARIES}
-                                        ${catkin_LIBRARIES} )
+#add_executable(arm_marker_server src/arm_marker_server.cpp)
+#target_link_libraries(arm_marker_server ${Boost_LIBRARIES}
+#                                        ${catkin_LIBRARIES} )
 
-install(TARGETS arm_marker_server
-        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(TARGETS arm_marker_server
+#        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
