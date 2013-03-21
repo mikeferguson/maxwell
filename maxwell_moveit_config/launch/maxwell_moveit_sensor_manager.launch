@@ -1,7 +1,7 @@
 <launch>
 
   <param name="octomap_frame" type="string" value="base_link" />
-  <param name="octomap_resolution" type="double" value="0.05" />
+  <param name="octomap_resolution" type="double" value="0.025" />
   <param name="max_range" type="double" value="5.0" />
 
   <rosparam command="load" file="$(find maxwell_moveit_config)/config/sensors_asus.yaml" />

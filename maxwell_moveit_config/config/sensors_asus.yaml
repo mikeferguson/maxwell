@@ -1,5 +1,5 @@
 sensors:
-  - sensor_type: depth_image_sensor
+  - sensor_type: ~depth_image_sensor
     image_topic: /camera/depth_registered/image_raw
     queue_size: 5
     near_clipping_plane_distance: 0.3
@@ -7,3 +7,43 @@ sensors:
     shadow_threshold: 0.5
     padding_scale: 2.0
     padding_offset: 0.01
+  - sensor_type: point_cloud_sensor
+    point_cloud_topic: /camera/depth_registered/points
+    max_range: 5.0
+    frame_subsample: 1
+    point_subsample: 1
+    self_mask:
+        min_sensor_dist: .35
+        self_see_default_padding: .03
+        self_see_default_scale: 1.0
+        self_see_links:
+          - name: right_gripper_finger_link
+          - name: left_gripper_finger_link
+          - name: right_gripper_F9_link
+          - name: left_gripper_F9_link
+          - name: r_gripper_link
+          - name: l_gripper_link
+          - name: right_gripper_servo_link
+          - name: left_gripper_servo_link
+          - name: right_gripper_mount_link
+          - name: left_gripper_mount_link
+          - name: gripper_F6_4_link
+          - name: gripper_F6_3_link
+          - name: gripper_F6_2_link
+          - name: gripper_F6_1_link
+          - name: arm_wrist_roll_link
+          - name: arm_wrist_flex_link
+          - name: arm_wrist_flex_servo_link
+          - name: arm_forearm_link
+          - name: arm_elbow_flex_link
+          - name: arm_upperarm_roll_link
+          - name: arm_upperarm_roll_servo_link
+          - name: arm_shoulder_lift_link
+          - name: arm_shoulder_lift_servo_link
+          - name: arm_shoulder_pan_link
+          - name: arm_shoulder_pan_servo_link
+          - name: arm_right_mount_link
+          - name: arm_left_mount_link
+          - name: torso_actuator_link
+          - name: torso_link
+          - name: base_link
