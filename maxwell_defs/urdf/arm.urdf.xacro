@@ -116,7 +116,7 @@
     <joint name="${name}_upperarm_roll_joint" type="revolute">
       <origin xyz="0 0 0" rpy="-1.57 0 1.57"/>
       <axis xyz="1 0 0"/>
-      <limit effort="30" velocity="0.524" lower="-3.14" upper="3.14" />
+      <limit effort="30" velocity="0.524" lower="-2" upper="2" />
       <parent link="${name}_upperarm_roll_servo_link"/>
       <child link="${name}_upperarm_roll_link" />
     </joint>
