@@ -9,6 +9,8 @@
   <license>BSD</license>
   <url>http://ros.org/wiki/maxwell</url>
 
+  <buildtool_depend>catkin</buildtool_depend>
+
   <run_depend>maxwell_calibration</run_depend>
   <run_depend>maxwell_defs</run_depend>
   <run_depend>maxwell_moveit_config</run_depend>
