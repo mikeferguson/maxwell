@@ -11,3 +11,8 @@ controller_list:
       - arm_forearm_roll_joint
       - arm_wrist_flex_joint
       - arm_wrist_roll_joint
+  - name: gripper_controller
+    default: true
+    joints:
+      - l_gripper_joint
+      - r_gripper_joint

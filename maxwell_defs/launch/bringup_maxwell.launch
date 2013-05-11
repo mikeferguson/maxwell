@@ -10,7 +10,7 @@
       <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
       <param name="sim" value="false"/>
   </node>
-  <node name="gripper_controller" pkg="arbotix_controllers" type="parallel_gripper_controller.py">
+  <node name="gripper_controller" pkg="arbotix_controllers" type="parallel_gripper_action_controller.py">
       <param name="pad_width" value="0.0381" />
       <param name="finger_length" value="0.08255" />
       <param name="center_left" value="0.18" />
