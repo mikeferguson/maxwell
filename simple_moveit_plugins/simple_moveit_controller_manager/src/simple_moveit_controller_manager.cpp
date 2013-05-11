@@ -2,6 +2,7 @@
 * Software License Agreement (BSD License)
 *
 *  Copyright (c) 2012, Willow Garage, Inc.
+*  Copyright (c) 2013, Michael E. Ferguson
 *  All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
@@ -33,6 +34,7 @@
 *********************************************************************/
 
 /* Author: Ioan Sucan, E. Gil Jones, Michael Ferguson */
+/* This is the PR2-controller manager, made more generic, aimed at Maxwell */
 
 #include <ros/ros.h>
 #include <moveit/controller_manager/controller_manager.h>
@@ -46,9 +48,9 @@
 namespace simple_moveit_controller_manager
 {
 
-/*static const double DEFAULT_MAX_GRIPPER_EFFORT = 10000.0;
+static const double DEFAULT_MAX_GRIPPER_EFFORT = 10000.0;
 static const double GRIPPER_OPEN = 0.086;
-static const double GRIPPER_CLOSED = 0.0;*/
+static const double GRIPPER_CLOSED = 0.0;
 
 template<typename T>
 class ActionBasedControllerHandle : public moveit_controller_manager::MoveItControllerHandle
@@ -128,43 +130,45 @@ protected:
   boost::shared_ptr<actionlib::SimpleActionClient<T> > controller_action_client_;
 };
 
-/*class Pr2GripperControllerHandle : public ActionBasedControllerHandle<pr2_controllers_msgs::Pr2GripperCommandAction>
+class GripperControllerHandle : public ActionBasedControllerHandle<control_msgs::GripperCommandAction>
 {
 public:
-  Pr2GripperControllerHandle(const std::string &name, const std::string &ns  = "gripper_action") :
-    ActionBasedControllerHandle<pr2_controllers_msgs::Pr2GripperCommandAction>(name, ns),
+  GripperControllerHandle(const std::string &name, const std::string &ns  = "gripper_action") :
+    ActionBasedControllerHandle<control_msgs::GripperCommandAction>(name, ns),
     closing_(false)
   {
   }
 
   virtual bool sendTrajectory(const moveit_msgs::RobotTrajectory &trajectory)
   {
+    ROS_INFO_STREAM("new trajectory to " << name_);
     if (!controller_action_client_)
       return false;
     if (!trajectory.multi_dof_joint_trajectory.points.empty())
     {
-      ROS_ERROR("The PR2 gripper controller cannot execute multi-dof trajectories.");
+      ROS_ERROR("The simple gripper controller cannot execute multi-dof trajectories.");
       return false;
     }
     
     if (trajectory.joint_trajectory.points.size() != 1)
     {
-      ROS_ERROR("The PR2 gripper controller expects a joint trajectory with one point only, but %u provided)", (unsigned int)trajectory.joint_trajectory.points.size());
+      ROS_ERROR("The simple gripper controller expects a joint trajectory with one point only, but %u provided)", (unsigned int)trajectory.joint_trajectory.points.size());
       return false;
     }
 
     if (trajectory.joint_trajectory.points[0].positions.empty())
     {
-      ROS_ERROR("The PR2 gripper controller expects a joint trajectory with one point that specifies at least one position, but 0 positions provided)");
+      ROS_ERROR("The simple gripper controller expects a joint trajectory with one point that specifies at least one position, but 0 positions provided)");
       return false;
     }
     
-    pr2_controllers_msgs::Pr2GripperCommandGoal goal;
+    control_msgs::GripperCommandGoal goal;
     goal.command.max_effort = DEFAULT_MAX_GRIPPER_EFFORT;
     if (!trajectory.joint_trajectory.points[0].velocities.empty())
       goal.command.max_effort = trajectory.joint_trajectory.points[0].velocities[0];
     
-    if (trajectory.joint_trajectory.points[0].positions[0] > 0.5)
+    goal.command.position = trajectory.joint_trajectory.points[0].positions[0];
+    /*if (trajectory.joint_trajectory.points[0].positions[0] > 0.5)
     {
       goal.command.position = GRIPPER_OPEN;
       closing_ = false;
@@ -175,12 +179,12 @@ public:
       goal.command.position = GRIPPER_CLOSED;
       closing_ = true;
       ROS_DEBUG_STREAM("Sending gripper close command");
-    }
+    }*/
 
     controller_action_client_->sendGoal(goal,
-					boost::bind(&Pr2GripperControllerHandle::controllerDoneCallback, this, _1, _2),
-					boost::bind(&Pr2GripperControllerHandle::controllerActiveCallback, this),
-					boost::bind(&Pr2GripperControllerHandle::controllerFeedbackCallback, this, _1));
+					boost::bind(&GripperControllerHandle::controllerDoneCallback, this, _1, _2),
+					boost::bind(&GripperControllerHandle::controllerActiveCallback, this),
+					boost::bind(&GripperControllerHandle::controllerFeedbackCallback, this, _1));
     done_ = false;
     last_exec_ = moveit_controller_manager::ExecutionStatus::RUNNING;
     return true;
@@ -189,7 +193,7 @@ public:
 private:
 
   void controllerDoneCallback(const actionlib::SimpleClientGoalState& state,
-                              const pr2_controllers_msgs::Pr2GripperCommandResultConstPtr& result)
+                              const control_msgs::GripperCommandResultConstPtr& result)
   {
     // the gripper action reports failure when closing the gripper and an object is inside
     if (state == actionlib::SimpleClientGoalState::ABORTED && closing_)
@@ -203,12 +207,12 @@ private:
     ROS_DEBUG_STREAM("Controller " << name_ << " started execution");
   }
   
-  void controllerFeedbackCallback(const pr2_controllers_msgs::Pr2GripperCommandFeedbackConstPtr& feedback)
+  void controllerFeedbackCallback(const control_msgs::GripperCommandFeedbackConstPtr& feedback)
   {
   }
   
   bool closing_;
-};*/
+};
 
 class SimpleFollowJointTrajectoryControllerHandle : public ActionBasedControllerHandle<control_msgs::FollowJointTrajectoryAction>
 {
@@ -295,12 +299,14 @@ public:
                   controller_joints_[name].push_back(std::string(controller_list[i]["joints"][j]));
                 
                 moveit_controller_manager::MoveItControllerHandlePtr new_handle;
-                if ( 0 )
+                if ( name == "gripper_controller" )
                 {
-                  /* TODO: gripper?
-                  new_handle.reset(ns.empty() ? new Pr2GripperControllerHandle(name) : new Pr2GripperControllerHandle(name, ns));
-                  if (!static_cast<Pr2GripperControllerHandle*>(new_handle.get())->isConnected())
-                    new_handle.reset();*/
+                  new_handle.reset(ns.empty() ? new GripperControllerHandle(name) : new GripperControllerHandle(name, ns));
+                  if (static_cast<GripperControllerHandle*>(new_handle.get())->isConnected())
+                  {
+                    ROS_INFO_STREAM("Added controller for " << name );
+	                controller_handles_[name] = new_handle;
+                  }
                 }
                 else
                 {
