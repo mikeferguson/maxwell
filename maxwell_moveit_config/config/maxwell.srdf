@@ -27,6 +27,7 @@
         <link name="r_gripper_link" />
         <link name="right_gripper_F9_link" />
         <link name="right_gripper_finger_link" />
+        <link name="gripper_link" />
     </group>
     <group name="Base">
         <joint name="world_joint" />
