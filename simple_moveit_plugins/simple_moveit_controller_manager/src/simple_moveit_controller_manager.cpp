@@ -196,10 +196,10 @@ private:
                               const control_msgs::GripperCommandResultConstPtr& result)
   {
     // the gripper action reports failure when closing the gripper and an object is inside
-    if (state == actionlib::SimpleClientGoalState::ABORTED && closing_)
+    //if (state == actionlib::SimpleClientGoalState::ABORTED && closing_)
       finishControllerExecution(actionlib::SimpleClientGoalState::SUCCEEDED);
-    else
-      finishControllerExecution(state);
+    //else
+      //finishControllerExecution(state);
   }
   
   void controllerActiveCallback() 
