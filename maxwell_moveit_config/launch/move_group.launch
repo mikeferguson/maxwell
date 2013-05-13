@@ -2,7 +2,7 @@
 
   <include file="$(find maxwell_moveit_config)/launch/planning_context.launch" />
 
-  <arg name="debug" default="true" />
+  <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
