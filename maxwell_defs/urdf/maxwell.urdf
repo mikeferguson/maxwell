@@ -291,7 +291,7 @@
     <visual>
       <origin rpy="-1.57 0 0" xyz="0 0 0"/>
       <geometry>
-        <mesh filename="package://maxwell_defs/meshes/sixdof_bracket2.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://maxwell_defs/meshes/sixdof_bracket1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="Black"/>
     </visual>
@@ -303,7 +303,7 @@
     </collision>
   </link>
   <joint name="arm_upperarm_roll_servo_joint" type="fixed">
-    <origin rpy="1.57 1.57 0" xyz="0.0839978 0 0"/>
+    <origin rpy="1.57 1.57 0" xyz="0.0712978 0 0"/>
     <parent link="arm_shoulder_lift_link"/>
     <child link="arm_upperarm_roll_servo_link"/>
   </joint>
@@ -330,7 +330,7 @@
   <joint name="arm_upperarm_roll_joint" type="revolute">
     <origin rpy="-1.57 0 1.57" xyz="0 0 0"/>
     <axis xyz="1 0 0"/>
-    <limit effort="30" lower="-3.14" upper="3.14" velocity="0.524"/>
+    <limit effort="30" lower="-2" upper="2" velocity="0.524"/>
     <parent link="arm_upperarm_roll_servo_link"/>
     <child link="arm_upperarm_roll_link"/>
   </joint>
@@ -341,9 +341,9 @@
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
     </inertial>
     <visual>
-      <origin rpy="1.57 0 3.14" xyz="0.074295 0 0"/>
+      <origin rpy="-1.57 0 3.14" xyz="0.0869955 0 0"/>
       <geometry>
-        <mesh filename="package://maxwell_defs/meshes/sixdof_bracket1.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="package://maxwell_defs/meshes/sixdof_bracket2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="Black"/>
     </visual>
@@ -355,7 +355,7 @@
     </collision>
   </link>
   <joint name="arm_elbow_flex_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.074295 0 0"/>
+    <origin rpy="0 0 0" xyz="0.0869955 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="30" lower="-1.57" upper="2.617" velocity="0.524"/>
     <parent link="arm_upperarm_roll_link"/>
