@@ -34,7 +34,8 @@
 *********************************************************************/
 
 /* Author: Ioan Sucan, E. Gil Jones, Michael Ferguson */
-/* This is the PR2-controller manager, made more generic, aimed at Maxwell */
+/* This is a simplified controller manager which uses control_msgs
+ * actions. It is based off the earlier pr2_controller_manager. */
 
 #include <ros/ros.h>
 #include <moveit/controller_manager/controller_manager.h>
@@ -48,10 +49,9 @@
 namespace simple_moveit_controller_manager
 {
 
-static const double DEFAULT_MAX_GRIPPER_EFFORT = 10000.0;
-static const double GRIPPER_OPEN = 0.086;
-static const double GRIPPER_CLOSED = 0.0;
-
+/*
+ * This is a simple base class, which handles all of the action creation/etc
+ */
 template<typename T>
 class ActionBasedControllerHandle : public moveit_controller_manager::MoveItControllerHandle
 {
@@ -130,9 +130,13 @@ protected:
   boost::shared_ptr<actionlib::SimpleActionClient<T> > controller_action_client_;
 };
 
+/*
+ * The gripper ...
+ */
 class GripperControllerHandle : public ActionBasedControllerHandle<control_msgs::GripperCommandAction>
 {
 public:
+  /* Topics will map to name/ns/goal, name/ns/result, etc */
   GripperControllerHandle(const std::string &name, const std::string &ns  = "gripper_action") :
     ActionBasedControllerHandle<control_msgs::GripperCommandAction>(name, ns),
     closing_(false)
@@ -162,25 +166,11 @@ public:
       return false;
     }
     
+    /* TODO: currently sending velocity as effort, make this better. */
     control_msgs::GripperCommandGoal goal;
-    goal.command.max_effort = DEFAULT_MAX_GRIPPER_EFFORT;
     if (!trajectory.joint_trajectory.points[0].velocities.empty())
       goal.command.max_effort = trajectory.joint_trajectory.points[0].velocities[0];
-    
     goal.command.position = trajectory.joint_trajectory.points[0].positions[0];
-    /*if (trajectory.joint_trajectory.points[0].positions[0] > 0.5)
-    {
-      goal.command.position = GRIPPER_OPEN;
-      closing_ = false;
-      ROS_DEBUG_STREAM("Sending gripper open command");
-    }
-    else
-    {
-      goal.command.position = GRIPPER_CLOSED;
-      closing_ = true;
-      ROS_DEBUG_STREAM("Sending gripper close command");
-    }*/
-
     controller_action_client_->sendGoal(goal,
 					boost::bind(&GripperControllerHandle::controllerDoneCallback, this, _1, _2),
 					boost::bind(&GripperControllerHandle::controllerActiveCallback, this),
@@ -214,6 +204,9 @@ private:
   bool closing_;
 };
 
+/*
+ * This is generally used for arms, but could also be used for multi-dof hands.
+ */
 class SimpleFollowJointTrajectoryControllerHandle : public ActionBasedControllerHandle<control_msgs::FollowJointTrajectoryAction>
 {
 public:
@@ -230,7 +223,7 @@ public:
       return false;
     if (!trajectory.multi_dof_joint_trajectory.points.empty())
     {
-      ROS_ERROR("The PR2 FollowJointTrajectory controller cannot execute multi-dof trajectories.");
+      ROS_ERROR("The FollowJointTrajectory controller cannot execute multi-dof trajectories.");
       return false;
     }
     if (done_)
@@ -272,18 +265,17 @@ public:
   
   SimpleMoveItControllerManager() : node_handle_("~")
   { 
-    /* need to initialize controllers_ from the server, as we have no standard
-       way of reading controller names */
+    /* need to initialize controllers_ from the param server */
     XmlRpc::XmlRpcValue controller_list;
     if (node_handle_.hasParam("controller_list"))
     {
       node_handle_.getParam("controller_list", controller_list);
       if (controller_list.getType() != XmlRpc::XmlRpcValue::TypeArray)
-        ROS_WARN("Controller list should be specified as an array");
+        ROS_ERROR("Controller list should be specified as an array");
       else
         for (int i = 0 ; i < controller_list.size() ; ++i)
           if (!controller_list[i].hasMember("name") || !controller_list[i].hasMember("joints"))
-            ROS_WARN("Name and joints must be specifed for each controller");
+            ROS_ERROR("Name and joints must be specifed for each controller");
           else
           {
             try
@@ -297,29 +289,36 @@ public:
                 int nj = controller_list[i]["joints"].size();
                 for (int j = 0 ; j < nj ; ++j)
                   controller_joints_[name].push_back(std::string(controller_list[i]["joints"][j]));
-                
-                moveit_controller_manager::MoveItControllerHandlePtr new_handle;
-                if ( name == "gripper_controller" )
+
+                if (controller_list[i].hasMember("type"))
                 {
-                  new_handle.reset(ns.empty() ? new GripperControllerHandle(name) : new GripperControllerHandle(name, ns));
-                  if (static_cast<GripperControllerHandle*>(new_handle.get())->isConnected())
+                  std::string type = std::string(controller_list[i]["type"]);
+
+                  moveit_controller_manager::MoveItControllerHandlePtr new_handle;
+                  if ( type == "GripperCommand" )
                   {
-                    ROS_INFO_STREAM("Added controller for " << name );
-	                controller_handles_[name] = new_handle;
+                    new_handle.reset(ns.empty() ? new GripperControllerHandle(name) : new GripperControllerHandle(name, ns));
+                    if (static_cast<GripperControllerHandle*>(new_handle.get())->isConnected())
+                    {
+                      ROS_INFO_STREAM("Added GripperCommand controller for " << name );
+	                  controller_handles_[name] = new_handle;
+                    }
+                  }
+                  else if ( type == "FollowJointTrajectory" )
+                  {
+                    new_handle.reset(ns.empty() ? new SimpleFollowJointTrajectoryControllerHandle(name) : new SimpleFollowJointTrajectoryControllerHandle(name, ns));
+                    if (static_cast<SimpleFollowJointTrajectoryControllerHandle*>(new_handle.get())->isConnected())
+                    {
+                      ROS_INFO_STREAM("Added FollowJointTrajectory controller for " << name );
+	                  controller_handles_[name] = new_handle;
+                    }
                   }
                 }
                 else
-                {
-                  new_handle.reset(ns.empty() ? new SimpleFollowJointTrajectoryControllerHandle(name) : new SimpleFollowJointTrajectoryControllerHandle(name, ns));
-                  if (static_cast<SimpleFollowJointTrajectoryControllerHandle*>(new_handle.get())->isConnected())
-                  { 
-                    ROS_INFO_STREAM("Added controller for " << name );
-	                controller_handles_[name] = new_handle;
-                  }
-                }
+                  ROS_ERROR_STREAM("No type specified for controller " << name);
               }
               else
-                ROS_WARN_STREAM("The list of joints for controller " << name << " is not specified as an array");
+                ROS_ERROR_STREAM("The list of joints for controller " << name << " is not specified as an array");
             }
             catch (...)
             {
