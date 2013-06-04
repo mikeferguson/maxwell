@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(maxwell_defs)
 
+find_package(catkin)
 catkin_package()
 
 install(DIRECTORY firmware
