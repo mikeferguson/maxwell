@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<robot>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <include filename="$(find maxwell_defs)/urdf/sensors/hokuyo_urg_laser.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/sensors/hokuyo_urg_laser.urdf.xacro" />
 
   <property name="ground_clearance" value="0.0238" />
   <!-- simplified box collision geometry for base -->

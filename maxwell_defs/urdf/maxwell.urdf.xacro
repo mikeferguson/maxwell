@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
-<robot name="maxwell" >
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="maxwell">
 
-  <property name="arm_height" value="0.6604"/> <!-- deck to arm_link at max height-->
-  <property name="column_height" value="1.172775" /> <!-- deck to top of 80/20 -->
+  <xacro:property name="arm_height" value="0.6604"/> <!-- deck to arm_link at max height-->
+  <xacro:property name="column_height" value="1.172775" /> <!-- deck to top of 80/20 -->
   
-  <include filename="$(find maxwell_defs)/urdf/hardware/ax12.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/hardware/rx64.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/sensors/xtion_camera.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/hardware/ax12.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/hardware/rx64.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/sensors/xtion_camera.xacro" />
   
   <!-- The following included files set up definitions of parts of the robot body -->
-  <include filename="$(find maxwell_defs)/urdf/base.urdf.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/torso.urdf.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/arm.urdf.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/gripper.urdf.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/head.urdf.xacro" />
-  <include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/base.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/torso.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/arm.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/gripper.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/head.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
 
   <!-- Now we can start using the macros included above to define the actual Maxwell -->
   <armadillo_base name="base" color="Orange"/>
