@@ -11,8 +11,8 @@
   
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>hokuyo_node</run_depend> <!-- currently needs to be pulled from hydro-devel branch -->
-  <!-- <run_depend>move_base</run_depend> not yet catkinized -->
+  <run_depend>hokuyo_node</run_depend>
+  <run_depend>move_base</run_depend>
   <run_depend>tf</run_depend>
   <run_depend>pocketsphinx</run_depend>
 </package>
