@@ -5,8 +5,8 @@
   <param name="/use_sim_time" value="false"/>
   <include file="$(find maxwell_defs)/launch/upload_maxwell.launch" />
 
-  <!-- ArbotiX and Controllers -->
-  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+  <!-- Etherbotix and Controllers -->
+  <node name="etherbotix" pkg="etherbotix" type="driver.py" output="screen">
       <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
       <param name="sim" value="false"/>
   </node>
@@ -20,7 +20,6 @@
   <node name="statepub" pkg="robot_state_publisher" type="state_publisher" />
 
   <!-- Monitoring and Diagnostics -->
-  <node pkg="maxwell_defs" type="laptop_battery.py" name="laptop_battery" />
   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
     <rosparam command="load" file="$(find maxwell_defs)/params/diagnostics.yaml" />
   </node>
