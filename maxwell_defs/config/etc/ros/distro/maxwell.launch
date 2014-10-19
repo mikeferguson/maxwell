@@ -1,0 +1,5 @@
+<launch>
+
+  <include file="$(find maxwell_defs)/launch/bringup_maxwell.launch" />
+
+</launch>
