@@ -9,6 +9,7 @@
   <node name="etherbotix" pkg="etherbotix_python" type="driver.py" output="screen">
       <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
       <param name="sim" value="false"/>
+      <remap from="cmd_vel" to="base_controller/command"/>
   </node>
   <node name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller">
       <param name="model" value="dualservo" />
@@ -26,6 +27,10 @@
   </node>
 
   <!-- Laser and Camera -->
+  <include file="$(find maxwell_defs)/launch/base_laser.launch" />
   <include file="$(find maxwell_defs)/launch/head_camera.launch" />
+
+  <!-- Teleop -->
+  <include file="$(find maxwell_defs)/launch/teleop.launch" />
 
 </launch>

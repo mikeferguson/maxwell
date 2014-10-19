@@ -22,4 +22,11 @@
   <run_depend>openni2_launch</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>urg_node</run_depend>
+
+  <!-- teleop -->
+  <run_depend>joy</run_depend>
+  <run_depend>ps3joy</run_depend>
+  <run_depend>teleop_twist_joy</run_depend>
+  <run_depend>topic_tools</run_depend>
+
 </package>
