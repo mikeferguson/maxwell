@@ -16,9 +16,11 @@
   <run_depend>xacro</run_depend>
   <run_depend>ivcon</run_depend>
 
-  <!-- diagnostics -->
-  <run_depend>diagnostic_msgs</run_depend>
-
   <!-- hardware -->
-  <run_depend>arbotix_python</run_depend>
+  <run_depend>arbotix_controllers</run_depend>
+  <run_depend>diagnostics_aggregator</run_depend>
+  <run_depend>etherbotix_python</run_depend>
+  <run_depend>openni2_launch</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>urg_node</run_depend>
 </package>

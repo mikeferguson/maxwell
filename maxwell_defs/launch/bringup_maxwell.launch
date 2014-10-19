@@ -6,7 +6,7 @@
   <include file="$(find maxwell_defs)/launch/upload_maxwell.launch" />
 
   <!-- Etherbotix and Controllers -->
-  <node name="etherbotix" pkg="etherbotix" type="driver.py" output="screen">
+  <node name="etherbotix" pkg="etherbotix_python" type="driver.py" output="screen">
       <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
       <param name="sim" value="false"/>
   </node>
@@ -23,5 +23,9 @@
   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
     <rosparam command="load" file="$(find maxwell_defs)/params/diagnostics.yaml" />
   </node>
+
+  <!-- Laser and Camera -->
+  <include file="$(find maxwell_defs)/launch/base_laser.launch" />
+  <include file="$(find maxwell_defs)/launch/head_camera.launch" />
 
 </launch>
