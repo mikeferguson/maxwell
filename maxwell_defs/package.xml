@@ -14,11 +14,10 @@
   <!-- definitions -->
   <run_depend>urdf</run_depend>
   <run_depend>xacro</run_depend>
-  <run_depend>ivcon</run_depend>
 
   <!-- hardware -->
   <run_depend>arbotix_controllers</run_depend>
-  <run_depend>diagnostics_aggregator</run_depend>
+  <run_depend>diagnostic_aggregator</run_depend>
   <run_depend>etherbotix_python</run_depend>
   <run_depend>openni2_launch</run_depend>
   <run_depend>robot_state_publisher</run_depend>
