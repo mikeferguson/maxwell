@@ -19,3 +19,6 @@ cp etc/ros/distro/maxwell.launch /etc/ros/$distro/maxwell.launch
 
 # Install upstart scripts
 cp etc/init/*.conf /etc/init/
+
+# Install udev (for laser)
+cp etc/udev/rules.d/* /etc/udev/rules.d/
