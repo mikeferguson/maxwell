@@ -33,6 +33,14 @@
         roscd maxwell_defs/config
         sudo ./install.sh
 
+ * (Optional) [Setup grub to not wait, even after a failed boot](http://askubuntu.com/questions/55551/how-can-i-force-ubuntu-to-boot-on-a-stuck-boot-menu) by adding GRUB_RECORDFAIL_TIMEOUT to /etc/default/grub:
+
+        GRUB_TIMEOUT=10
+        GRUB_RECORDFAIL_TIMEOUT=$GRUB_TIMEOUT
+
+ * (Optional) Power down as soon as power button is pressed by editing the
+   /etc/acpi/powerbtn.sh script to simply call shutdown.
+
 ## Troubleshooting ASUS Xtion
 
 ### Updating Firmware
