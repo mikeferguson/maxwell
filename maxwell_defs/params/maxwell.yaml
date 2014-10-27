@@ -1,3 +1,4 @@
+rate: 100.0
 joints: {
   head_pan_joint: {type: dynamixel, id: 1},
   head_tilt_joint: {type: dynamixel, id: 2, invert: true, min_angle: -90, max_angle: 90},
@@ -15,8 +16,9 @@ controllers: {
   head_controller: {type: follow_controller, joints: [head_pan_joint, head_tilt_joint], action_name: head_controller/follow_joint_trajectory},
   arm_controller: {type: follow_controller, joints: [arm_lift_joint, arm_shoulder_pan_joint, arm_shoulder_lift_joint, arm_upperarm_roll_joint, arm_elbow_flex_joint, arm_wrist_flex_joint, arm_wrist_roll_joint], action_name: arm_controller/follow_joint_trajectory},
   #  REX motors: 31750 cpr = 0.3888105m travel
-  #  D6/D7 - Left Encoder
-  base_controller: {type: diff_controller, base_width: 0.381, ticks_meter: 327228, Kp: 1.5, Kd: 0, Ki: 0.1, Kw: 400, accel_limit: 1.0 },
+  #  Tuned/Tested up to 0.5m/s, 2.0rad/s
+  #  Acceleration limits: 0.3m/s^2, 1.5rad/s^2
+  base_controller: {type: diff_controller, base_width: 0.381, ticks_meter: 327228, Kp: 1.5, Kd: 0.0, Ki: 0.5, Kw: 800, accel_limit: 0.3 },
   #  A0 - Lift Direction A
   #  A1 - Lift Direction B
   #  D5 - Encoder Pulse
@@ -26,3 +28,4 @@ controllers: {
   # range: 0.4644
   arm_lift_controller: {type: linear_controller_i, joint: arm_lift_joint }
 }
+imu: true
