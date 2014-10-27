@@ -26,7 +26,5 @@
   <!-- teleop -->
   <run_depend>joy</run_depend>
   <run_depend>ps3joy</run_depend>
-  <run_depend>teleop_twist_joy</run_depend>
-  <run_depend>topic_tools</run_depend>
 
 </package>
