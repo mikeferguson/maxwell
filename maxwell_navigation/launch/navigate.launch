@@ -1,13 +1,13 @@
 <launch>
 
   <!-- Run Map Server -->
-  <arg name="map" default="apt_313"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find vanadium_maps)/$(arg map).yaml"/>
+  <arg name="map_file" default="$(find vanadium_maps)/apt_313.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
 
   <!--- Run AMCL -->
-  <include file="$(find maxwell_navigation)/launch/amcl.launch" />
+  <include file="$(find maxwell_navigation)/launch/includes/amcl.launch.xml" />
 
   <!--- Run Move Base --> 
-  <include file="$(find maxwell_navigation)/launch/move_base.launch" /> 
+  <include file="$(find maxwell_navigation)/launch/includes/move_base.launch.xml" />
 
 </launch>
