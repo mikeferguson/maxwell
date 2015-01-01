@@ -1,7 +1,7 @@
 sensors:
-  - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
-    point_cloud_topic: /camera/depth_registered/points
-    filtered_cloud_topic: /camera/filtered/points
+  - sensor_plugin: ~occupancy_map_monitor/PointCloudOctomapUpdater
+    point_cloud_topic: /head_camera/depth_registered/points
+    filtered_cloud_topic: /head_camera/filtered/points
     max_range: 3.0
     frame_subsample: 1
     point_subsample: 1
