@@ -35,7 +35,7 @@
     </joint>
     <link name="${name}_link">
       <visual>
-        <origin xyz="0 0 -0.034" rpy="1.57 3.14 0" />
+        <origin xyz="0.01 0 -0.034" rpy="1.57 3.14 0" />
         <geometry>
           <mesh filename="package://maxwell_defs/meshes/arm_mount.stl" scale="0.001 0.001 0.001"/>
         </geometry>
@@ -215,7 +215,7 @@
     <joint name="${name}_wrist_roll_joint" type="revolute">
       <axis xyz="1 0 0" />
       <limit effort="30" velocity="0.785" lower="-2.617" upper="2.617"/>
-      <origin xyz="0.031 0 0" rpy="0 0 0" />
+      <origin xyz="0.041 0 0" rpy="0 0 0" />
       <parent link="${name}_wrist_flex_link"/>
       <child link="${name}_wrist_roll_link"/>
     </joint>
