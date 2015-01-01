@@ -2,7 +2,7 @@
   <name>maxwell_calibration</name>
   <version>0.2.0</version>
   <description>
-    Launch and configuration files for calibrating Maxwell using the new generic 'calibration' stack.
+    Launch and configuration files for calibrating Maxwell using the 'robot_calibration' package.
   </description>
   <author>Michael Ferguson</author>
   <maintainer email="mike@vanadiumlabs.com">Michael Ferguson</maintainer>
@@ -11,11 +11,5 @@
   
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>calibration_launch</run_depend>
-  <run_depend>calibration_estimation</run_depend>
-
-  <!-- For running tests -->
-  <!--<run_depend>pr2_calibration_launch</run_depend>
-  <run_depend>kdl</run_depend>
-  <run_depend>kdl_parser</run_depend>-->
+  <run_depend>robot_calibration</run_depend>
 </package>

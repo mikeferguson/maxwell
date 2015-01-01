@@ -4,16 +4,10 @@ project(maxwell_calibration)
 find_package(catkin)
 catkin_package()
 
-install(DIRECTORY capture_data
+install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(DIRECTORY estimate_params
+install(DIRECTORY params
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
-
-install(DIRECTORY view_results
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-#rosbuild_add_rostest(${CMAKE_CURRENT_SOURCE_DIR}/test/test_maxwell_fk.launch)
