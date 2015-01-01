@@ -8,7 +8,7 @@
 
   <node pkg="rosbag" type="record" name="calibration_bagger" output="screen"
         args="--bz2 -o /tmp/maxwell_calibration/calibration_data calibration_data robot_description" >
-    <param name="mkdir_tmp" command="mkdir -m 777 -p /tmp/ubr_calibration" />
+    <param name="mkdir_tmp" command="mkdir -m 777 -p /tmp/maxwell_calibration" />
   </node>
   
 </launch>
