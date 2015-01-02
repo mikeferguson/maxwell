@@ -4,3 +4,5 @@ moveit_setup_assistant_config:
     relative_path: urdf/maxwell.urdf
   SRDF:
     relative_path: config/maxwell.srdf
+  CONFIG:
+    generated_timestamp: 1420161817
