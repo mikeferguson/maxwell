@@ -4,7 +4,7 @@ project(maxwell_defs)
 find_package(catkin)
 catkin_package()
 
-install(DIRECTORY firmware
+install(DIRECTORY config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
@@ -20,14 +20,6 @@ install(DIRECTORY params
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-install(DIRECTORY upstart
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
 install(DIRECTORY urdf
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
-
-install(PROGRAMS nodes/laptop_battery.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
