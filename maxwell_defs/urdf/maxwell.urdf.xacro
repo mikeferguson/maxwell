@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="maxwell">
 
-  <xacro:property name="arm_height" value="0.6604"/> <!-- deck to arm_link at max height-->
-  <xacro:property name="column_height" value="1.172775" /> <!-- deck to top of 80/20 -->
+  <xacro:property name="arm_height" value="0.2"/> <!-- deck to arm_link at max height-->
+  <xacro:property name="column_height" value="0.258375" /> <!-- deck to top of 80/20 -->
   
   <xacro:include filename="$(find maxwell_defs)/urdf/hardware/ax12.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/hardware/rx64.xacro" />
@@ -11,8 +11,6 @@
   <!-- The following included files set up definitions of parts of the robot body -->
   <xacro:include filename="$(find maxwell_defs)/urdf/base.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/torso.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/arm.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/gripper.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/head.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
 
@@ -23,26 +21,6 @@
   <maxwell_torso name="torso" parent="base_link">
     <origin xyz="-0.00635 0 ${base_size_z+arm_height}" rpy="0 0 0"/>
   </maxwell_torso>
-
-  <!-- Live joint between torso and arm -->
-  <joint name="arm_lift_joint" type="prismatic">
-    <axis xyz="0 0 1" />
-    <limit lower="-0.464" upper="0" effort="30" velocity="0.0508"/>
-    <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="torso_link"/>
-    <child link="arm_lift_link"/>
-  </joint>
-  <link name="arm_lift_link"/>
-
-  <!-- Arm -->
-  <maxwell_arm name="arm" parent="arm_lift_link">
-    <origin xyz="0.0611 0 0" rpy="0 0 0"/>
-  </maxwell_arm>
-
-  <!-- Gripper -->
-  <maxwell_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
-    <origin xyz="0 0 0" rpy="0 0 0" /> 
-  </maxwell_gripper>
 
   <!-- Head -->
   <maxwell_head name="head" parent="torso_link" color="Orange">
