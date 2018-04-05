@@ -18,8 +18,8 @@
   <!-- Transforms imu data in imu_link frame to ENU data in base_link frame -->
   <node name="imu_manager" pkg="nodelet" type="nodelet" args="manager" />
   <node name="imu_data_transformer" pkg="nodelet" type="nodelet" args="load imu_transformer/imu_transformer_nodelet imu_manager" >
-    <remap from="imu_in" to="etherbotix/imu_raw" />
-    <remap from="mag" to="etherbotix/mag_raw" />
+    <remap from="imu_in/data" to="etherbotix/imu_raw" />
+    <remap from="imu_in/mag" to="etherbotix/mag_raw" />
     <remap from="imu_out/data" to="imu/data_raw" />
     <remap from="imu_out/mag" to="imu/mag" />
     <param name="target_frame" value="base_link" />
@@ -52,6 +52,6 @@
   <include file="$(find maxwell_defs)/launch/teleop.launch" />
 
   <!-- imu_link tf -->
-  <node name="fake_broadcaster" pkg="tf" type="static_transform_publisher" args="0.05 0.05 0.3302 -0.5 0.5 0.5 0.5 base_link imu_link 25" />
+  <node name="fake_broadcaster" pkg="tf" type="static_transform_publisher" args="0.05 -0.05 0.1 0.5 -0.5 -0.5 0.5 base_link imu_link 25" />
 
 </launch>
