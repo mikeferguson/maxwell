@@ -7,11 +7,37 @@
 
   <!-- Etherbotix and Controllers -->
   <node name="etherbotix" pkg="etherbotix_python" type="driver.py" output="screen">
-      <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
-      <param name="sim" value="false"/>
-      <remap from="cmd_vel" to="base_controller/command"/>
+    <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
+    <param name="sim" value="false" />
+    <remap from="cmd_vel" to="base_controller/command" />
+    <remap from="imu_raw" to="etherbotix/imu_raw" />
+    <remap from="mag_raw" to="etherbotix/mag_raw" />
   </node>
   <node name="statepub" pkg="robot_state_publisher" type="state_publisher" />
+
+  <!-- Transforms imu data in imu_link frame to ENU data in base_link frame -->
+  <node name="imu_manager" pkg="nodelet" type="nodelet" args="manager" />
+  <node name="imu_data_transformer" pkg="nodelet" type="nodelet" args="load imu_transformer/imu_transformer_nodelet imu_manager" >
+    <remap from="imu_in" to="etherbotix/imu_raw" />
+    <remap from="mag" to="etherbotix/mag_raw" />
+    <remap from="imu_out/data" to="imu/data_raw" />
+    <remap from="imu_out/mag" to="imu/mag" />
+    <param name="target_frame" value="base_link" />
+  </node>
+
+  <!-- Filter raw gyro, accel and mag data into a usable orientation -->
+  <node name="imu_filter" pkg="nodelet" type="nodelet" args="load imu_filter_madgwick/ImuFilterNodelet imu_manager" >
+    <rosparam>
+      use_mag: false
+      mag_bias_x: 0
+      mag_bias_y: 0
+      mag_bias_z: 0
+      orientation_stddev: 0.001
+      gain: 0.01
+      zeta: 0.001
+      publish_tf: false
+    </rosparam>
+  </node>
 
   <!-- Monitoring and Diagnostics -->
   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
@@ -24,5 +50,8 @@
 
   <!-- Teleop -->
   <include file="$(find maxwell_defs)/launch/teleop.launch" />
+
+  <!-- imu_link tf -->
+  <node name="fake_broadcaster" pkg="tf" type="static_transform_publisher" args="0.05 0.05 0.3302 -0.5 0.5 0.5 0.5 base_link imu_link 25" />
 
 </launch>
