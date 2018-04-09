@@ -14,7 +14,12 @@ chains:
     joints:
      - head_pan_joint
      - head_tilt_joint
-checkerboard_finder:
-  topic: /head_camera/depth_registered/points
-  points_x: 4
-  points_y: 5
+duration: 5.0  # movement time between poses
+features:
+  checkerboard_finder:
+    name: robot_calibration/CheckerboardFinder
+    topic: /head_camera/depth_registered/points
+    camera_sensor_name: camera
+    chain_sensor_name: arm
+    points_x: 4
+    points_y: 5
