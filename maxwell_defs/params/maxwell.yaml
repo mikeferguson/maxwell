@@ -10,7 +10,7 @@ joints: {
   arm_wrist_roll_joint: {type: dynamixel, id: 7, max_speed: 45},
   l_gripper_joint: {type: dynamixel, id: 8, max_speed: 10, invert: true},
   r_gripper_joint: {type: dynamixel, id: 9, max_speed: 10},
-  arm_lift_joint: {type: calibrated_linear, min_position: -0.464, max_position: 0, max_speed: 0.0508, calibration_data: { "0": 0, "-150": -0.4644 }}
+  arm_lift_joint: {type: calibrated_linear, min_position: -0.444, max_position: 0, max_speed: 0.0508, calibration_data: { "0": 0, "-150": -0.444 }}
 }
 controllers: {
   head_controller: {type: follow_controller, joints: [head_pan_joint, head_tilt_joint], action_name: head_controller/follow_joint_trajectory},
