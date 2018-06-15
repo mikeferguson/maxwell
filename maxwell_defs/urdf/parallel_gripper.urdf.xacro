@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot>
+
+  <property name="parallel_gripper_width" value="0.112" />
+  <property name="parallel_gripper_length" value="0.114" />
+  <property name="parallel_gripper_height" value="0.044" />
+
+  <property name="parallel_gripper_finger_width" value="0.010" />
+  <property name="parallel_gripper_finger_length" value="0.0508" />
+  <property name="parallel_gripper_finger_height" value="0.027" />
+
+  <macro name="maxwell_parallel_gripper_finger" params="suffix parent reflect color *origin">
+    <link name="${parent}_${suffix}_finger_link">
+      <visual>
+        <insert_block name="origin" />
+        <geometry>
+          <box size="${parallel_gripper_finger_length} ${parallel_gripper_finger_width} ${parallel_gripper_finger_height}" />
+        </geometry>
+        <material name="${color}" />
+      </visual>
+    </link>
+    <joint name="${parent}_${suffix}_finger_joint" type="prismatic">
+      <axis xyz="0 ${reflect} 0" />
+      <limit effort="30" velocity="1.0" lower="0" upper="0.05"/>
+      <origin xyz="${parallel_gripper_finger_length/2} 0 0" rpy="0 0 0" />
+      <parent link="${parent}_link"/>
+      <child link="${parent}_${suffix}_finger_link"/>
+    </joint>
+  </macro>
+
+  <macro name="maxwell_parallel_gripper" params="name parent color *origin">
+    <link name="${name}_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${parallel_gripper_length} ${parallel_gripper_width} ${parallel_gripper_height}" />
+        </geometry>
+        <material name="Black" />
+      </visual>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <origin xyz="${parallel_gripper_length/2} 0 0" rpy="0 0 0" />
+      <parent link="${parent}_link"/>
+      <child link="${name}_link"/>
+    </joint>
+    <maxwell_parallel_gripper_finger parent="${name}" suffix="l" reflect="1" color="Orange" >
+      <origin xyz="${parallel_gripper_length/2} 0 0" rpy="0 0 0"/>
+    </maxwell_parallel_gripper_finger>
+    <maxwell_parallel_gripper_finger parent="${name}" suffix="r" reflect="-1" color="Orange" >
+      <origin xyz="${parallel_gripper_length/2} 0 0" rpy="0 0 0"/>
+    </maxwell_parallel_gripper_finger>
+  </macro>
+
+</robot>

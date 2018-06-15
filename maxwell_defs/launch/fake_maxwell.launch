@@ -2,19 +2,21 @@
   <!-- Maxwell is an awesome mobile manipulator. This launch file 
        brings a slightly less awesome simulated version of him to life. -->
 
-  <include file="$(find maxwell_defs)/launch/upload_maxwell.launch" />
+  <arg name="parallel_gripper"  default="false"/>
+  <include file="$(find maxwell_defs)/launch/upload_maxwell.launch" >
+    <arg name="parallel_gripper" value="$(arg parallel_gripper)"/>
+  </include>
 
   <!-- ArbotiX -->
-  <node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
+  <!--<node name="arbotix" pkg="arbotix_python" type="arbotix_driver" output="screen">
       <rosparam file="$(find maxwell_defs)/params/maxwell.yaml" command="load" />
       <param name="sim" value="true"/>
   </node>
-  <node name="gripper_controller" pkg="arbotix_controllers" type="parallel_gripper_action_controller.py" output="screen">
-      <param name="pad_width" value="0.0381" />
-      <param name="finger_length" value="0.08255" />
-      <param name="center_left" value="0.18" />
-      <param name="center_right" value="0.18" />
-      <param name="invert_left" value="True" />
+  <include file="$(find maxwell_defs)/launch/gripper_controller.launch" >
+    <arg name="parallel_gripper" value="$(arg parallel_gripper)"/>
+  </include>-->
+  <node name="stategui" pkg="joint_state_publisher" type="joint_state_publisher" >
+    <param name="use_gui" value="true" />
   </node>
   <node name="statepub" pkg="robot_state_publisher" type="state_publisher" />
 

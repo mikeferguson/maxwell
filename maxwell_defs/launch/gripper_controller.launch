@@ -1,0 +1,23 @@
+<launch>
+
+  <arg name="parallel_gripper"  default="false"/>
+  <node unless="$(arg parallel_gripper)"
+        name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller">
+      <param name="model" value="dualservo" />
+      <param name="pad_width" value="0.0381" />
+      <param name="finger_length" value="0.08255" />
+      <param name="center_left" value="0.18" />
+      <param name="center_right" value="0.18" />
+      <param name="invert_left" value="True" />
+  </node>
+  <node if="$(arg parallel_gripper)"
+        name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller">
+      <param name="model" value="dualservo" />
+      <param name="pad_width" value="0.0381" />
+      <param name="finger_length" value="0.08255" />
+      <param name="center_left" value="0.18" />
+      <param name="center_right" value="0.18" />
+      <param name="invert_left" value="True" />
+  </node>
+
+</launch>

@@ -3,7 +3,10 @@
        This launch file brings him to life. -->
 
   <param name="/use_sim_time" value="false"/>
-  <include file="$(find maxwell_defs)/launch/upload_maxwell.launch" />
+  <arg name="parallel_gripper"  default="false"/>
+  <include file="$(find maxwell_defs)/launch/upload_maxwell.launch" >
+    <arg name="parallel_gripper" value="$(arg parallel_gripper)"/>
+  </include>
 
   <!-- Etherbotix and Controllers -->
   <node name="etherbotix" pkg="etherbotix_python" type="driver.py" output="screen">
@@ -11,24 +14,15 @@
       <param name="sim" value="false"/>
       <remap from="cmd_vel" to="base_controller/command"/>
   </node>
-  <node name="gripper_controller" pkg="arbotix_controllers" type="gripper_controller">
-      <param name="model" value="dualservo" />
-      <param name="pad_width" value="0.0381" />
-      <param name="finger_length" value="0.08255" />
-      <param name="center_left" value="0.18" />
-      <param name="center_right" value="0.18" />
-      <param name="invert_left" value="True" />
-  </node>
+  <include file="$(find maxwell_defs)/launch/gripper_controller.launch" >
+    <arg name="parallel_gripper" value="$(arg parallel_gripper)"/>
+  </include>
   <node name="statepub" pkg="robot_state_publisher" type="state_publisher" />
 
   <!-- Monitoring and Diagnostics -->
   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
     <rosparam command="load" file="$(find maxwell_defs)/params/diagnostics.yaml" />
   </node>
-
-  <!-- Laser and Camera -->
-  <include file="$(find maxwell_defs)/launch/base_laser.launch" />
-  <include file="$(find maxwell_defs)/launch/head_camera.launch" />
 
   <!-- Teleop -->
   <include file="$(find maxwell_defs)/launch/teleop.launch" />

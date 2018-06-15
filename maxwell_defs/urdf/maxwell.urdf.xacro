@@ -13,6 +13,7 @@
   <xacro:include filename="$(find maxwell_defs)/urdf/torso.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/arm.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/gripper.urdf.xacro" />
+  <xacro:include filename="$(find maxwell_defs)/urdf/parallel_gripper.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/head.urdf.xacro" />
   <xacro:include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
 
@@ -39,10 +40,19 @@
     <origin xyz="0.0611 0 0" rpy="0 0 0"/>
   </maxwell_arm>
 
-  <!-- Gripper -->
-  <maxwell_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
-    <origin xyz="0 0 0" rpy="0 0 0" /> 
-  </maxwell_gripper>
+  <!-- Older Two Finger Gripper -->
+  <xacro:unless value="$(arg parallel_gripper)">
+    <maxwell_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </maxwell_gripper>
+  </xacro:unless>
+
+  <!-- New Parallel Gripper -->
+  <xacro:if value="$(arg parallel_gripper)">
+    <maxwell_parallel_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </maxwell_parallel_gripper>
+  </xacro:if>
 
   <!-- Head -->
   <maxwell_head name="head" parent="torso_link" color="Orange">

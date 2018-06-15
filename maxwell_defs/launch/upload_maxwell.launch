@@ -1,4 +1,9 @@
 <launch>
+
+	<!-- do we have a parallel gripper installed -->
+    <arg name="parallel_gripper"  default="false"/>
+
     <!-- send maxwell urdf to param server -->
-    <param name="robot_description" command="rosrun xacro xacro.py '$(find maxwell_defs)/urdf/maxwell.urdf.xacro'" />
+    <param name="robot_description" command="rosrun xacro xacro '$(find maxwell_defs)/urdf/maxwell.urdf.xacro' parallel_gripper:=$(arg parallel_gripper)" />
+
 </launch>
