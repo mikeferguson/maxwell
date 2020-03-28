@@ -24,6 +24,10 @@
     <rosparam command="load" file="$(find maxwell_defs)/params/diagnostics.yaml" />
   </node>
 
+  <!-- Laser and Camera -->
+  <include file="$(find maxwell_defs)/launch/base_laser.launch" />
+  <include file="$(find maxwell_defs)/launch/head_camera.launch" />
+
   <!-- Teleop -->
   <include file="$(find maxwell_defs)/launch/teleop.launch" />
 
