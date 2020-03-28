@@ -1,6 +1,6 @@
 <launch>
 
-	<!-- do we have a parallel gripper installed -->
+    <!-- do we have a parallel gripper installed -->
     <arg name="parallel_gripper"  default="false"/>
 
     <!-- send maxwell urdf to param server -->

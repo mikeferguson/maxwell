@@ -17,7 +17,7 @@
   <include file="$(find maxwell_defs)/launch/gripper_controller.launch" >
     <arg name="parallel_gripper" value="$(arg parallel_gripper)"/>
   </include>
-  <node name="statepub" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
   <!-- Monitoring and Diagnostics -->
   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
