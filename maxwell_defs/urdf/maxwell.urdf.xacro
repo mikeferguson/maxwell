@@ -18,12 +18,12 @@
   <xacro:include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
 
   <!-- Now we can start using the macros included above to define the actual Maxwell -->
-  <armadillo_base name="base" color="Orange"/>
+  <xacro:armadillo_base name="base" color="Orange"/>
 
   <!-- Add Torso Upright -->
-  <maxwell_torso name="torso" parent="base_link">
+  <xacro:maxwell_torso name="torso" parent="base_link">
     <origin xyz="-0.00635 0 ${base_size_z+arm_height}" rpy="0 0 0"/>
-  </maxwell_torso>
+  </xacro:maxwell_torso>
 
   <!-- Live joint between torso and arm -->
   <joint name="arm_lift_joint" type="prismatic">
@@ -36,30 +36,30 @@
   <link name="arm_lift_link"/>
 
   <!-- Arm -->
-  <maxwell_arm name="arm" parent="arm_lift_link">
+  <xacro:maxwell_arm name="arm" parent="arm_lift_link">
     <origin xyz="0.0611 0 0" rpy="0 0 0"/>
-  </maxwell_arm>
+  </xacro:maxwell_arm>
 
   <!-- Older Two Finger Gripper -->
   <xacro:unless value="$(arg parallel_gripper)">
-    <maxwell_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
+    <xacro:maxwell_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </maxwell_gripper>
+    </xacro:maxwell_gripper>
   </xacro:unless>
 
   <!-- New Parallel Gripper -->
   <xacro:if value="$(arg parallel_gripper)">
-    <maxwell_parallel_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
+    <xacro:maxwell_parallel_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
       <origin xyz="0 0 0" rpy="0 0 0" />
-    </maxwell_parallel_gripper>
+    </xacro:maxwell_parallel_gripper>
   </xacro:if>
 
   <!-- Head -->
-  <maxwell_head name="head" parent="torso_link" color="Orange">
+  <xacro:maxwell_head name="head" parent="torso_link" color="Orange">
     <origin xyz="0 0 ${column_height-arm_height}" rpy="0 0 0"/>
-  </maxwell_head>
-  <xtion_camera name="head_camera" parent="head_tilt_link">
+  </xacro:maxwell_head>
+  <xacro:xtion_camera name="head_camera" parent="head_tilt_link">
     <origin xyz="0 0 0.026" rpy="0 0 0"/>
-  </xtion_camera>
+  </xacro:xtion_camera>
 
 </robot>

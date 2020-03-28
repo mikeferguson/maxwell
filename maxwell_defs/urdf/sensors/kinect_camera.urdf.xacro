@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<robot>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <macro name="kinect_camera" params="name parent *origin">
+  <xacro:macro name="kinect_camera" params="name parent *origin">
     <joint name="${name}_frame_joint" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_frame"/>
     </joint>
@@ -70,7 +70,7 @@
     </joint>
     <link name="${name}_rgb_optical_frame"/>
 
-  </macro>
+  </xacro:macro>
 
 </robot>
 

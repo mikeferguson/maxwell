@@ -1,54 +1,54 @@
 <?xml version="1.0"?>
-<robot>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <macro name="maxwell_gripper" params="name parent color *origin">
-    <ax12_F6_fixed parent="${parent}_link" name="${name}_F6_1" color="Black">
+  <xacro:macro name="maxwell_gripper" params="name parent color *origin">
+    <xacro:ax12_F6_fixed parent="${parent}_link" name="${name}_F6_1" color="Black">
       <origin xyz="${0.0381/2} 0.017 -0.014" rpy="0 0 0"/>
-    </ax12_F6_fixed>
-    <ax12_F6_fixed parent="${name}_F6_1_link" name="${name}_F6_2" color="Black">
+    </xacro:ax12_F6_fixed>
+    <xacro:ax12_F6_fixed parent="${name}_F6_1_link" name="${name}_F6_2" color="Black">
       <origin xyz="0.008 0.004 0" rpy="3.14 3.14 0"/>
-    </ax12_F6_fixed>
-    <ax12_F6_fixed parent="${parent}_link" name="${name}_F6_3" color="Black">
+    </xacro:ax12_F6_fixed>
+    <xacro:ax12_F6_fixed parent="${parent}_link" name="${name}_F6_3" color="Black">
       <origin xyz="${0.0381/2} -0.017 -0.014" rpy="3.14 0 0"/>
-    </ax12_F6_fixed>
-    <ax12_F6_fixed parent="${name}_F6_3_link" name="${name}_F6_4" color="Black">
+    </xacro:ax12_F6_fixed>
+    <xacro:ax12_F6_fixed parent="${name}_F6_3_link" name="${name}_F6_4" color="Black">
       <origin xyz="0.008 0.004 0" rpy="0 0 3.14"/>
-    </ax12_F6_fixed>
+    </xacro:ax12_F6_fixed>
 
-    <ax12_side_fixed parent="${name}_F6_2_link" name="left_${name}_mount" color="Black">
+    <xacro:ax12_side_fixed parent="${name}_F6_2_link" name="left_${name}_mount" color="Black">
       <origin xyz="-0.018 0.005 0" rpy="1.57 0 1.57"/>
-    </ax12_side_fixed>
-    <ax12_side_fixed parent="${name}_F6_4_link" name="right_${name}_mount" color="Black">
+    </xacro:ax12_side_fixed>
+    <xacro:ax12_side_fixed parent="${name}_F6_4_link" name="right_${name}_mount" color="Black">
       <origin xyz="-0.018 0.005 0" rpy="1.57 0 1.57"/>
-    </ax12_side_fixed>
+    </xacro:ax12_side_fixed>
 
-    <dynamixel_ax12_pan parent="left_${name}_mount_link" name="left_${name}_servo" color="Black">
+    <xacro:dynamixel_ax12_pan parent="left_${name}_mount_link" name="left_${name}_servo" color="Black">
       <origin xyz="0 0 -0.042" rpy="-1.57 1.57 0"/>
-    </dynamixel_ax12_pan>
-    <dynamixel_ax12_pan parent="right_${name}_mount_link" name="right_${name}_servo" color="Black">
+    </xacro:dynamixel_ax12_pan>
+    <xacro:dynamixel_ax12_pan parent="right_${name}_mount_link" name="right_${name}_servo" color="Black">
       <origin xyz="0 0 -0.042" rpy="1.57 1.57 0"/>
-    </dynamixel_ax12_pan>
+    </xacro:dynamixel_ax12_pan>
 
-    <ax12_F1_revolute parent="left_${name}_servo_link" name="l_${name}" llimit="-1.57" ulimit="1.57" vlimit="0.5" color="${color}">
+    <xacro:ax12_F1_revolute parent="left_${name}_servo_link" name="l_${name}" llimit="-1.57" ulimit="1.57" vlimit="0.5" color="${color}">
       <origin xyz="0 0 0" rpy="3.14 0 1.57"/>
-    </ax12_F1_revolute>
-    <ax12_F1_revolute parent="right_${name}_servo_link" name="r_${name}" llimit="-1.57" ulimit="1.57" vlimit="0.5" color="${color}">
+    </xacro:ax12_F1_revolute>
+    <xacro:ax12_F1_revolute parent="right_${name}_servo_link" name="r_${name}" llimit="-1.57" ulimit="1.57" vlimit="0.5" color="${color}">
       <origin xyz="0 0 0" rpy="0 0 -1.57"/>
-    </ax12_F1_revolute>
+    </xacro:ax12_F1_revolute>
 
-    <ax12_F9_fixed parent="l_${name}_link" name="left_${name}_F9" color="Black">
+    <xacro:ax12_F9_fixed parent="l_${name}_link" name="left_${name}_F9" color="Black">
       <origin xyz="0.0155 0.038 0" rpy="0 3.14 0"/>
-    </ax12_F9_fixed>
-    <ax12_F9_fixed parent="r_${name}_link" name="right_${name}_F9" color="Black">
+    </xacro:ax12_F9_fixed>
+    <xacro:ax12_F9_fixed parent="r_${name}_link" name="right_${name}_F9" color="Black">
       <origin xyz="0.0155 0.038 0" rpy="0 3.14 0"/>
-    </ax12_F9_fixed>
+    </xacro:ax12_F9_fixed>
 
-    <ax12_F11_fixed parent="left_${name}_F9_link" name="left_${name}_finger" color="Grey">
+    <xacro:ax12_F11_fixed parent="left_${name}_F9_link" name="left_${name}_finger" color="Grey">
       <origin xyz="0 -0.013 0 " rpy="0 0 0"/>
-    </ax12_F11_fixed>
-    <ax12_F11_fixed parent="right_${name}_F9_link" name="right_${name}_finger" color="Grey">
+    </xacro:ax12_F11_fixed>
+    <xacro:ax12_F11_fixed parent="right_${name}_F9_link" name="right_${name}_finger" color="Grey">
       <origin xyz="0 -0.013 0" rpy="0 0 0"/>
-    </ax12_F11_fixed>
-  </macro>
+    </xacro:ax12_F11_fixed>
+  </xacro:macro>
 
 </robot>

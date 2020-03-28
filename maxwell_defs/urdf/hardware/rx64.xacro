@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<robot>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <macro name="dynamixel_rx64_pan" params="parent name color *origin" >
+  <xacro:macro name="dynamixel_rx64_pan" params="parent name color *origin" >
     <joint name="${name}_joint" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_link" />
     </joint>
@@ -30,11 +30,11 @@
         </geometry>
       </collision>
     </link>
-  </macro>
+  </xacro:macro>
 
-  <macro name="dynamixel_rx64_tilt" params="parent name color *origin" >
+  <xacro:macro name="dynamixel_rx64_tilt" params="parent name color *origin" >
     <joint name="${name}_joint" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_link" />
     </joint>
@@ -61,11 +61,11 @@
         </geometry>
       </collision>
     </link>
-  </macro>
+  </xacro:macro>
 
-  <macro name="rx64_side_revolute" params="parent name color llimit ulimit vlimit *origin">
+  <xacro:macro name="rx64_side_revolute" params="parent name color llimit ulimit vlimit *origin">
     <joint name="${name}_joint" type="revolute">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
        <axis xyz="0 0 1"/>
       <limit effort="30" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
       <parent link="${parent}"/>
@@ -94,11 +94,11 @@
         </geometry>
       </collision>
     </link>
-  </macro>
+  </xacro:macro>
 
-  <macro name="rx64_hinge" params="parent name color llimit ulimit vlimit *origin">
+  <xacro:macro name="rx64_hinge" params="parent name color llimit ulimit vlimit *origin">
     <joint name="${name}_joint" type="revolute">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
        <axis xyz="0 1 0"/>
       <limit effort="30" velocity="${vlimit}" lower="${llimit}" upper="${ulimit}" />
       <parent link="${parent}"/>
@@ -127,6 +127,6 @@
         </geometry>
       </collision>
     </link>
-  </macro>
+  </xacro:macro>
 
 </robot>

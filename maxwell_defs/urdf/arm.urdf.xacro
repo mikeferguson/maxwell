@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<robot>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   
   <!-- standoffs -->
-  <macro name="standoffs" params="name parent length *origin">
+  <xacro:macro name="standoffs" params="name parent length *origin">
     <joint name="${name}_joint" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_link" />
     </joint>
@@ -24,12 +24,12 @@
         </geometry>
       </collision>
     </link>
-  </macro>
+  </xacro:macro>
 
   <!-- cosmetics -->
-  <macro name="arm_mount" params="name parent *origin">
+  <xacro:macro name="arm_mount" params="name parent *origin">
     <joint name="${name}_joint" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_link" />
     </joint>
@@ -48,37 +48,37 @@
         </geometry>
       </collision>
     </link>
-  </macro>
+  </xacro:macro>
 
   <!-- the actual arm -->
-  <macro name="maxwell_arm" params="name parent *origin">
+  <xacro:macro name="maxwell_arm" params="name parent *origin">
 
     <!-- Arm Link -->
     <joint name="${name}_base_joint" type="fixed">
-      <insert_block name="origin" />
+      <xacro:insert_block name="origin" />
       <parent link="${parent}"/>
       <child link="${name}_link"/>
     </joint>
     <link name="${name}_link"/>
-    <arm_mount name="${name}_left_mount" parent="${name}_link">
+    <xacro:arm_mount name="${name}_left_mount" parent="${name}_link">
       <origin xyz="-0.0611 0.0254 0" rpy="0 0 0"/>
-    </arm_mount>
-    <arm_mount name="${name}_right_mount" parent="${name}_link">
+    </xacro:arm_mount>
+    <xacro:arm_mount name="${name}_right_mount" parent="${name}_link">
       <origin xyz="-0.0611 ${-0.0254} 0" rpy="3.14 0 0"/>
-    </arm_mount>
+    </xacro:arm_mount>
 
     <!-- Shoulder pan -->
-    <dynamixel_rx64_pan parent="${name}_link" name="${name}_shoulder_pan_servo" color="Black">
+    <xacro:dynamixel_rx64_pan parent="${name}_link" name="${name}_shoulder_pan_servo" color="Black">
       <origin xyz="0 0 0" rpy="0 0 0"/>
-    </dynamixel_rx64_pan>
-    <rx64_side_revolute parent="${name}_shoulder_pan_servo_link" name="${name}_shoulder_pan" llimit="-1.57" ulimit="1.57" vlimit="0.524" color="Grey">
+    </xacro:dynamixel_rx64_pan>
+    <xacro:rx64_side_revolute parent="${name}_shoulder_pan_servo_link" name="${name}_shoulder_pan" llimit="-1.57" ulimit="1.57" vlimit="0.524" color="Grey">
       <origin xyz="0 0 0.0235" rpy="0 0 0"/>
-    </rx64_side_revolute>
+    </xacro:rx64_side_revolute>
 
     <!-- Shoulder lift -->
-    <dynamixel_rx64_tilt parent="${name}_shoulder_pan_link" name="${name}_shoulder_lift_servo" color="Black">
+    <xacro:dynamixel_rx64_tilt parent="${name}_shoulder_pan_link" name="${name}_shoulder_lift_servo" color="Black">
       <origin xyz="0 0 ${0.0611-0.013+0.0045}" rpy="0 -1.57 0"/>
-    </dynamixel_rx64_tilt>
+    </xacro:dynamixel_rx64_tilt>
     <joint name="${name}_shoulder_lift_joint" type="revolute">
       <origin xyz="0 0 0" rpy="0 1.57 0"/>
       <axis xyz="0 1 0"/>
@@ -110,9 +110,9 @@
     </link>
 
     <!-- Upper Arm Roll -->
-    <dynamixel_rx64_tilt parent="${name}_shoulder_lift_link" name="${name}_upperarm_roll_servo" color="Black">
+    <xacro:dynamixel_rx64_tilt parent="${name}_shoulder_lift_link" name="${name}_upperarm_roll_servo" color="Black">
       <origin xyz="0.0712978 0 0" rpy="1.57 1.57 0"/>
-    </dynamixel_rx64_tilt>
+    </xacro:dynamixel_rx64_tilt>
     <joint name="${name}_upperarm_roll_joint" type="revolute">
       <origin xyz="0 0 0" rpy="-1.57 0 1.57"/>
       <axis xyz="1 0 0"/>
@@ -204,12 +204,12 @@
     </link>
 
     <!-- Wrist flex -->
-    <dynamixel_rx64_tilt parent="${name}_forearm_link" name="${name}_wrist_flex_servo" color="Black">
+    <xacro:dynamixel_rx64_tilt parent="${name}_forearm_link" name="${name}_wrist_flex_servo" color="Black">
       <origin xyz="0.125 0 0" rpy="0 0 0"/>
-    </dynamixel_rx64_tilt>
-    <rx64_hinge parent="${name}_wrist_flex_servo_link" name="${name}_wrist_flex" llimit="-1.57" ulimit="1.57" vlimit="0.785" color="Grey">
+    </xacro:dynamixel_rx64_tilt>
+    <xacro:rx64_hinge parent="${name}_wrist_flex_servo_link" name="${name}_wrist_flex" llimit="-1.57" ulimit="1.57" vlimit="0.785" color="Grey">
       <origin xyz="0 0 0.0" rpy="0 0 0"/>
-    </rx64_hinge>
+    </xacro:rx64_hinge>
 
     <!-- Wrist roll -->
     <joint name="${name}_wrist_roll_joint" type="revolute">
@@ -242,6 +242,6 @@
       </collision>
     </link>
 
-  </macro>
+  </xacro:macro>
 
 </robot>
