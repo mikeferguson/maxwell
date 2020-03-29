@@ -1,7 +1,7 @@
 <launch>
 
   <!-- Run Map Server -->
-  <arg name="map_file" default="$(find vanadium_maps)/apt_313.yaml"/>
+  <arg name="map_file" default="$(find maxwell_navigation)/maps/botfarm.yaml"/>
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
 
   <!--- Run AMCL -->
