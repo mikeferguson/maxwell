@@ -37,7 +37,7 @@
       <visual>
         <origin xyz="0.01 0 -0.034" rpy="1.57 3.14 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/arm_mount.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/arm_mount.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="Black"/>
       </visual>
@@ -97,7 +97,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="-1.57 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/sixdof_bracket1.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/sixdof_bracket1.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="Black"/>
       </visual>
@@ -131,7 +131,7 @@
       <visual>
         <origin xyz="0.0869955 0 0" rpy="-1.57 0 3.14" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/sixdof_bracket2.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/sixdof_bracket2.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="Black"/>
       </visual>
@@ -162,7 +162,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="1.57 -1.57 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/rx64.stl" scale="1 1 1"/>
         </geometry>
         <material name="Black"/>
       </visual>
@@ -191,7 +191,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="-1.57 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/arm_mx64_forearm.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/arm_mx64_forearm.stl" scale="1 1 1"/>
         </geometry>
         <material name="Black"/>
       </visual>
@@ -230,7 +230,7 @@
       <visual>
         <origin xyz="${0.0381/2} 0 0" rpy="0 0 1.57" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="Black"/>
       </visual>

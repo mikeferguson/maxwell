@@ -12,7 +12,7 @@
         <origin xyz="-0.03 0 0.02" rpy="0 0 -1.57" />
         <!--origin xyz="-0.03 -0.07 0" rpy="0 0 -1.57"-->
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/kinect.stl" />
+          <mesh filename="package://maxwell/meshes/kinect.stl" />
         </geometry>
         <material name="Black" />
       </visual>

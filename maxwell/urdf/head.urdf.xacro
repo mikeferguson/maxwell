@@ -12,7 +12,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="-1.57 3.14 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/head_mount.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/head_mount.stl" scale="1 1 1"/>
         </geometry>
         <material name="Black"/>
       </visual>

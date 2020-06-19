@@ -4,18 +4,18 @@
   <xacro:property name="arm_height" value="0.6604"/> <!-- deck to arm_link at max height-->
   <xacro:property name="column_height" value="1.172775" /> <!-- deck to top of 80/20 -->
   
-  <xacro:include filename="$(find maxwell_defs)/urdf/hardware/ax12.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/hardware/rx64.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/sensors/xtion_camera.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/hardware/ax12.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/hardware/rx64.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/sensors/xtion_camera.xacro" />
   
   <!-- The following included files set up definitions of parts of the robot body -->
-  <xacro:include filename="$(find maxwell_defs)/urdf/base.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/torso.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/arm.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/gripper.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/parallel_gripper.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/head.urdf.xacro" />
-  <xacro:include filename="$(find maxwell_defs)/urdf/materials.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/base.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/torso.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/arm.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/gripper.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/parallel_gripper.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/head.urdf.xacro" />
+  <xacro:include filename="$(find maxwell)/urdf/materials.urdf.xacro" />
 
   <!-- Now we can start using the macros included above to define the actual Maxwell -->
   <xacro:armadillo_base name="base" color="Orange"/>
@@ -40,19 +40,10 @@
     <origin xyz="0.0611 0 0" rpy="0 0 0"/>
   </xacro:maxwell_arm>
 
-  <!-- Older Two Finger Gripper -->
-  <xacro:unless value="$(arg parallel_gripper)">
-    <xacro:maxwell_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:maxwell_gripper>
-  </xacro:unless>
-
   <!-- New Parallel Gripper -->
-  <xacro:if value="$(arg parallel_gripper)">
-    <xacro:maxwell_parallel_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
-      <origin xyz="0 0 0" rpy="0 0 0" />
-    </xacro:maxwell_parallel_gripper>
-  </xacro:if>
+  <xacro:maxwell_parallel_gripper name="gripper" parent="arm_wrist_roll" color="Orange">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </xacro:maxwell_parallel_gripper>
 
   <!-- Head -->
   <xacro:maxwell_head name="head" parent="torso_link" color="Orange">

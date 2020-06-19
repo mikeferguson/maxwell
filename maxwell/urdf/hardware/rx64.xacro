@@ -19,7 +19,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="0 0 -1.57" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/rx64.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -50,7 +50,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="1.57 1.57 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/rx64.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/rx64.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -83,7 +83,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="1.57 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/rx64-side-bracket.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/rx64-side-bracket.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -116,7 +116,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 -1.57" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/rx64-hinge-bracket.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/rx64-hinge-bracket.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>

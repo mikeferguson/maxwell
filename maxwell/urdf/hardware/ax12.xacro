@@ -22,7 +22,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="1.57 0 1.57" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -53,7 +53,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -85,7 +85,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="3.14 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/F3.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -116,7 +116,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F3.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/F3.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -149,7 +149,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F2.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/F2.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -182,7 +182,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="3.14 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F1.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/F1.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -213,7 +213,7 @@
       <visual>
         <origin xyz=" 0 0 0 " rpy="3.14 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F6.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/F6.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -244,7 +244,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F9.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/F9.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>
@@ -275,7 +275,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/F11.stl" scale="1 1 1"/>
+          <mesh filename="package://maxwell/meshes/F11.stl" scale="1 1 1"/>
         </geometry>
         <material name="${color}"/>
       </visual>

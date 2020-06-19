@@ -32,7 +32,7 @@
       <visual>
         <origin xyz="-0.05 -0.0127 -0.560" rpy="0 0 3.14" />
         <geometry>
-          <mesh filename="package://maxwell_defs/meshes/FA-35-TR.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://maxwell/meshes/FA-35-TR.stl" scale="0.001 0.001 0.001"/>
         </geometry>
         <material name="Grey"/>
       </visual>
