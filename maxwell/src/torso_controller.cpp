@@ -429,6 +429,7 @@ public:
 
   bool stop(bool force)
   {
+    (void) force;
     return true;
   }
 
@@ -437,7 +438,7 @@ public:
     return true;
   }
 
-  void update(const rclcpp::Time& now, const rclcpp::Duration& dt)
+  void update(const rclcpp::Time& /*now*/, const rclcpp::Duration& /*dt&*/)
   {
     if (has_zero_command_)
     {
