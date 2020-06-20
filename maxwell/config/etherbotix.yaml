@@ -1,0 +1,145 @@
+etherbotix:
+  ros__parameters:
+    default_controllers:
+      - "arm_lift_controller"  # has to come first, creates arm lift joint
+      - "arm_controller.follow_joint_trajectory"
+      - "base_controller"
+      - "gripper_controller.mimic"
+      - "gripper_controller.command"
+      - "head_controller.follow_joint_trajectory"
+      - "head_controller.point_head"
+    arm_controller:
+      follow_joint_trajectory:
+        type: "robot_controllers/FollowJointTrajectoryController"
+        joints:
+          - arm_lift_joint
+          - arm_shoulder_pan_joint
+          - arm_shoulder_lift_joint
+          - arm_upperarm_roll_joint
+          - arm_elbow_flex_joint
+          - arm_wrist_flex_joint
+          - arm_wrist_roll_joint
+    arm_lift_controller:
+      type: "maxwell/TorsoController"
+      joint: "arm_lift_joint"
+    base_controller:
+      type: "robot_controllers/DiffDriveBaseController"
+      max_velocity_x: 0.5
+      max_acceleration_x: 0.3
+      # Base width in meters
+      track_width: 0.381
+      # REX mtors: 4.875" wheels = 0.389m rollout = 2.57 rotations / meter
+      radians_per_meter: 16.1478
+      # hold position
+      moving_threshold: -0.01
+      rotating_threshold: -0.01
+      # autostart to get odom
+      autostart: true
+      # name of joints
+      l_wheel_joints:
+        - "base_l_wheel_joint"
+      r_wheel_joints:
+        - "base_r_wheel_joint"
+    gripper_controller:
+      mimic:
+        type: "robot_controllers/ScaledMimicController"
+        mimic_joint: "gripper_l_finger_joint"
+        controlled_joint: "gripper_r_finger_joint"
+        autostart: true
+      command:
+        type: "robot_controllers/ParallelGripperController"
+        l_gripper_joint: gripper_l_finger_joint
+        r_gripper_joint: gripper_r_finger_joint
+    head_controller:
+      follow_joint_trajectory:
+        type: "robot_controllers/FollowJointTrajectoryController"
+        joints:
+          - head_pan_joint
+          - head_tilt_joint
+      point_head:
+        type: "robot_controllers/PointHeadController"
+    # Dynamixel servo config
+    servo_joints:
+      - head_pan_joint
+      - head_tilt_joint
+      - arm_shoulder_pan_joint
+      - arm_shoulder_lift_joint
+      - arm_upperarm_roll_joint
+      - arm_elbow_flex_joint
+      - arm_wrist_flex_joint
+      - arm_wrist_roll_joint
+      - gripper_l_finger_joint
+      # TODO: gripper servo
+    head_pan_joint:
+      id: 1
+    head_tilt_joint:
+      id: 2
+      invert: true
+      min_pos: -1.57
+      max_pos: 1.57
+    #  A0 - Lift Direction A
+    #  A1 - Lift Direction B
+    #  D5 - Encoder Pulse
+    #  D7 - Lift PWM
+    # -150 = 15.625" from ground = 0.3960m - 0.0238m (ground clearance) - 0.1310 (base size z) = 0.242m
+    # 0    = 33.875" from ground = 0.8604m
+    # range: 0.4644
+    arm_lift_joint:
+      max_vel: 0.0508
+      calibration_data:
+        # These have to be in increasing order!
+        - -150.0
+        - -0.444
+        - 0.0
+        - 0.0
+    arm_shoulder_pan_joint:
+      id: 3
+      ticks: 4096
+      range: 6.283185307179586
+      max_vel: 0.5235987755982988
+    arm_shoulder_lift_joint:
+      id: 4
+      invert: true
+      ticks: 4096
+      range: 6.283185307179586
+      max_vel: 0.5235987755982988
+    arm_upperarm_roll_joint:
+      id: 10
+      ticks: 4096
+      range: 6.283185307179586
+      max_vel: 0.5235987755982988
+    arm_elbow_flex_joint:
+      id: 5
+      ticks: 4096
+      range: 6.283185307179586
+      max_vel: 0.5235987755982988
+    arm_wrist_flex_joint:
+      id: 6
+      invert: true
+      ticks: 4096
+      range: 6.283185307179586
+      max_vel: 0.7853981633974483
+    arm_wrist_roll_joint:
+      id: 7
+      max_vel: 0.7853981633974483
+    gripper_l_finger_joint:
+      id: 8
+      # Open = 0.05 at 537
+      # Closed = 0.0 at 329
+      center: 329
+      range: 0.246
+      min_pos: 0.0
+      max_pos: 0.05
+    # REX motors: 31750 cpr
+    # 64cpr*50:
+    ticks_per_radian: 5053.0
+    # Publish IMU
+    imu: true
+    # Tuned/Tested up to 0.5m/s, 2.0rad/s
+    motor_kp: 1.5
+    motor_kd: 0.0
+    motor_ki: 0.5
+    motor_kw: 800.0
+    # Name for joints
+    l_motor_name: "base_l_wheel_joint"
+    r_motor_name: "base_r_wheel_joint"
