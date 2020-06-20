@@ -1,0 +1,9 @@
+<library path="torso_controller">
+
+  <class name="maxwell/TorsoController"
+         type="maxwell::TorsoController"
+         base_class_type="robot_controllers_interface::Controller">
+    <description>Custom controller and joint handle for torso</description>
+  </class>
+
+</library>

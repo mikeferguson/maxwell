@@ -15,6 +15,13 @@
   <exec_depend>urdf</exec_depend>
   <exec_depend>xacro</exec_depend>
 
+  <!-- custom torso controller -->
+  <depend>etherbotix</depend>
+  <depend>pluginlib</depend>
+  <depend>rclcpp</depend>
+  <depend>robot_controllers_interface</depend>
+  <depend>std_srvs</depend>
+
   <!-- hardware -->
   <exec_depend>diagnostic_aggregator</exec_depend>
   <exec_depend>openni2_camera</exec_depend>
@@ -29,6 +36,8 @@
   <exec_depend>maxwell_calibration</exec_depend>
   <exec_depend>maxwell_moveit_config</exec_depend>
   <exec_depend>maxwell_navigation</exec_depend>
+
+  <test_depend>ament_cmake_gtest</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
